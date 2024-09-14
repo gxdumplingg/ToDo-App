@@ -1,5 +1,6 @@
 package com.example.todoapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,7 @@ class CategoryAdapter(private val categories: List<Category>) : RecyclerView.Ada
         private val taskCount: TextView = itemView.findViewById(R.id.tvTaskCount)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.rectangleProgressBar)
 
+        @SuppressLint("SetTextI18n")
         fun bind(category: Category) {
             categoryName.text = category.title
             taskCount.text = "${category.completedPercent}%"
