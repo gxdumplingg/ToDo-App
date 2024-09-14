@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="splash_heading"><![CDATA[Task Management & \nTo-Do List]]></string>
+    <string name="splash_description">This productive tool is designed to help \nyou better manage your task \nproject-wise conveniently!</string>
+    <string name="start">Let\'s Start!</string>
+    <string name="hello">Hello!</string>
+    <string name="my_name">Le Huong Giang</string>
+    <string name="in_progress">In Progress</string>
+</resources>
