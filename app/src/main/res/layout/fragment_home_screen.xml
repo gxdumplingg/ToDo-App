@@ -33,6 +33,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHello" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/search_bar_background"
+        android:textAppearance="@style/CustomSearchView"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUsername"
+        app:layout_constraintVertical_bias="0.0"
+        app:queryBackground="@null"
+        app:queryHint="@string/search_task" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/todayTaskWidget"
         android:layout_width="match_parent"
@@ -44,7 +60,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUsername">
+        app:layout_constraintTop_toBottomOf="@id/searchBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Your today's task \nalmost done"
+                android:text="@string/your_today_task_almost_done"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +90,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/poppins"
-                android:text="View Tasks"
+                android:text="@string/view_task"
                 android:textAllCaps="false"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
@@ -183,10 +199,10 @@
         android:id="@+id/task_group_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"
         android:paddingBottom="10dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTaskGroups"
         tools:listitem="@layout/item_task_group" />
 
@@ -194,11 +210,11 @@
         android:id="@+id/btn_add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="normal"
-        android:background="@drawable/icon_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
+        android:background="@drawable/icon_background"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/blue" />
+        app:backgroundTint="@color/blue"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,10 +21,7 @@ interface TaskDao {
     @Delete
     suspend fun deleteTask(task: Task)
 
-    // Lấy tất cả task (không bị ẩn)
-    @Query("SELECT * FROM task_table WHERE isArchived = 0")
+    @Query("SELECT * FROM task_table")
     fun getAllTasks(): LiveData<List<Task>>
-
-
 }
 

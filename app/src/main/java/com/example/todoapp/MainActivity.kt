@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.splashScreenFragment -> {
                     bottomNavigationView.visibility = View.GONE
                 }
+                R.id.addTaskFragment -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
                 else -> {
                     bottomNavigationView.visibility = View.VISIBLE
                 }

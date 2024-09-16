@@ -18,10 +18,18 @@
         android:id="@+id/homeScreenFragment"
         android:name="com.example.todoapp.ui.home.HomeScreenFragment"
         android:label="Home Screen"
-        tools:layout="@layout/fragment_home_screen" />
+        tools:layout="@layout/fragment_home_screen">
+        <action
+            android:id="@+id/action_homeScreenFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.example.todoapp.ui.task.AddTaskFragment"
-        android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
+        android:label="Add Task"
+        tools:layout="@layout/fragment_add_task">
+        <action
+            android:id="@+id/action_addTaskFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
 </navigation>

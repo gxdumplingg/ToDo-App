@@ -35,7 +35,7 @@ class CategoryAdapter(private val categories: List<Category>) : RecyclerView.Ada
         fun bind(category: Category) {
             categoryName.text = category.title
             taskCount.text = "${category.completedPercent}%"
-            progressBar.progress = category.completedPercent
+            progressBar.progress = category.completedPercent.toInt()
         }
     }
 }

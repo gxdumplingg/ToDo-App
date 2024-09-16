@@ -34,7 +34,7 @@ class TaskGroupAdapter(private val taskGroups: List<Category>) : RecyclerView.Ad
         fun bind(taskGroup: Category) {
             categoryName.text = taskGroup.title
             taskCount.text = "${taskGroup.completedPercent} Tasks"
-            progressBar.progress = taskGroup.completedPercent
+            progressBar.progress = taskGroup.completedPercent.toInt()
         }
     }
 }

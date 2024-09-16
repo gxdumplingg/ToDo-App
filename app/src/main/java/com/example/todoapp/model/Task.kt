@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+
 @Entity(
     tableName = "task_table",
     foreignKeys = [ForeignKey(
@@ -15,15 +16,13 @@ import androidx.room.PrimaryKey
 )
 data class Task (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "taskId") val id : Int,
+    @ColumnInfo(name = "taskId") val id : Long,
     @ColumnInfo(name = "taskTitle") val title : String,
     @ColumnInfo val dueDate : String,
     @ColumnInfo val timeStart : String,
     @ColumnInfo val timeEnd : String,
-    @ColumnInfo val categoryId : Int,
-    @ColumnInfo var status : Int,
-    @ColumnInfo var priority : Int,
+    @ColumnInfo val categoryId : Long,
+    @ColumnInfo var status : Int, // to do, in progress, done, archived
+    @ColumnInfo var priority : Int, // low, mid, high
     @ColumnInfo val description : String,
-    @ColumnInfo var isArchived : Boolean,
-    @ColumnInfo var isDone : Boolean,
 )
