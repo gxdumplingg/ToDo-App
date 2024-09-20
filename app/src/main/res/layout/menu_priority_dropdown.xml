@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_dropdown">
+
+    <TextView
+        android:id="@+id/menu_item_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Low"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins_regular"/>
+
+    <TextView
+        android:id="@+id/menu_item_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Medium"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins_regular"/>
+
+    <TextView
+        android:id="@+id/menu_item_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="High"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins_regular"/>
+
+
+</LinearLayout>

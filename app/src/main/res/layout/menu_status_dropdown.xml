@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_dropdown">
+
+    <TextView
+        android:id="@+id/menu_item_to_do"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="To do"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins_regular"/>
+
+    <TextView
+        android:id="@+id/menu_item_in_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="In progress"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins_regular"/>
+
+    <TextView
+        android:id="@+id/menu_item_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Done"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins_regular"/>
+
+
+</LinearLayout>

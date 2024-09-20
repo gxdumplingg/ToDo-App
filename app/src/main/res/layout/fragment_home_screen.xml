@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/white"
     tools:context=".ui.home.HomeScreenFragment">
 
     <TextView
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
 
         android:layout_margin="10dp"
-        app:cardBackgroundColor="@color/blue"
+        app:cardBackgroundColor="@color/yellow"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,8 +74,8 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/your_today_task_almost_done"
-                android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,8 +91,9 @@
                 android:focusable="true"
                 android:fontFamily="@font/poppins"
                 android:text="@string/view_task"
+                android:textStyle="bold"
                 android:textAllCaps="false"
-                android:textColor="@color/blue"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTaskMessage" />
@@ -115,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:text="10%"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/progressCircle"
                 app:layout_constraintEnd_toEndOf="@id/progressCircle"
@@ -148,7 +149,7 @@
         android:fontFamily="@font/poppins_regular"
         android:gravity="center_vertical"
         android:text="5"
-        android:textColor="@color/gray"
+        android:textColor="@color/dark_gray"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/tvInProgress"
         app:layout_constraintTop_toBottomOf="@id/todayTaskWidget" />
@@ -158,7 +159,8 @@
         android:id="@+id/category_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:paddingEnd="8dp"
         android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -190,7 +192,7 @@
         android:fontFamily="@font/poppins_regular"
         android:gravity="center_vertical"
         android:text="5"
-        android:textColor="@color/gray"
+        android:textColor="@color/dark_gray"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/tvTaskGroups"
         app:layout_constraintTop_toBottomOf="@id/category_recycler_view" />
@@ -213,7 +215,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/icon_background"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/dark_gray"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

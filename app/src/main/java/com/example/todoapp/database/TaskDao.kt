@@ -8,7 +8,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.todoapp.model.Task
-import com.example.todoapp.model.TaskWithCategory
 
 @Dao
 interface TaskDao {
