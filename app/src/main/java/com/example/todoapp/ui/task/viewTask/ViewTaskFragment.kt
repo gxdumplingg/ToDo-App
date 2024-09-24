@@ -1,10 +1,11 @@
 package com.example.todoapp.ui.task.viewTask
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.adapter.ViewPagerAdapter
@@ -46,5 +47,24 @@ class ViewTaskFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
+
+        customTabWidth()
+    }
+
+    private fun customTabWidth(){
+        binding.tabLayout.post {
+            val tabLayout = binding.tabLayout.getChildAt(0) as ViewGroup
+            for (i in 0 until tabLayout.childCount) {
+                val tab = tabLayout.getChildAt(i)
+                val layoutParams = tab.layoutParams as LinearLayout.LayoutParams
+                when (i) {
+                    0 -> layoutParams.width = (resources.displayMetrics.widthPixels * 0.15).toInt() // Tab All
+                    1 -> layoutParams.width = (resources.displayMetrics.widthPixels * 0.3).toInt()  // Tab To Do
+                    2 -> layoutParams.width = (resources.displayMetrics.widthPixels * 0.35).toInt()  // Tab In Progress
+                    3 -> layoutParams.width = (resources.displayMetrics.widthPixels * 0.2).toInt() // Tab Done
+                }
+                tab.layoutParams = layoutParams
+            }
+        }
     }
 }
