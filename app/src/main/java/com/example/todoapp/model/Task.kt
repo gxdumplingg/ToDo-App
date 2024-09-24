@@ -4,25 +4,24 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.Date
 
 @Entity(
     tableName = "task_table",
     foreignKeys = [ForeignKey(
         entity = Category::class,
-        parentColumns = ["category_id"], // bảng Category
-        childColumns = ["categoryId"], // bảng Task
-        onDelete = ForeignKey.CASCADE // bảng cha xóa thì các hàng liên quan trong bảng con cũng xóa theo
+        parentColumns = ["id"],
+        childColumns = ["categoryId"],
+        onDelete = ForeignKey.CASCADE
     )]
 )
-data class Task (
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "taskId") val id : Long,
-    @ColumnInfo(name = "taskTitle") val title : String,
-    @ColumnInfo val dueDate : String,
-    @ColumnInfo val timeStart : String,
-    @ColumnInfo val timeEnd : String,
-    @ColumnInfo val categoryId : Long,
-    @ColumnInfo var status : Int, // to do, in progress, done, archived
-    @ColumnInfo var priority : Int, // low, mid, high
-    @ColumnInfo val description : String,
+data class Task(
+    @PrimaryKey(autoGenerate = true) val id: Long=0,
+    val title: String,
+    val dueDate: Date,
+    val timeStart: String,
+    val timeEnd: String,
+    val categoryId: Long,
+    val status: String,
+    val description: String
 )

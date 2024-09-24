@@ -11,7 +11,7 @@ import com.example.todoapp.model.Task
 
 @Dao
 interface TaskDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertTask(task: Task)
 
     @Update
@@ -22,5 +22,11 @@ interface TaskDao {
 
     @Query("SELECT * FROM task_table")
     fun getAllTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM task_table WHERE status = :status ORDER BY dueDate ASC")
+    fun getTasksByStatus(status: String): LiveData<List<Task>>
+
+    @Query("SELECT COUNT(*) FROM task_table WHERE status = 'In Progress'")
+    fun getInProgressTaskCount(): LiveData<Int>
 }
 

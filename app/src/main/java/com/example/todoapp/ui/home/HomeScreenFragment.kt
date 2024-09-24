@@ -1,5 +1,6 @@
 package com.example.todoapp.ui.home
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,16 +14,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
 import com.example.todoapp.adapter.CategoryAdapter
-import com.example.todoapp.adapter.TaskGroupAdapter
+import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentHomeScreenBinding
-import com.example.todoapp.model.Category
+import com.example.todoapp.model.Task
+import com.example.todoapp.viewmodel.AddTaskViewModel
 import com.example.todoapp.viewmodel.CategoryViewModel
 
 class HomeScreenFragment : Fragment() {
 
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var taskGroupAdapter: TaskGroupAdapter
     private val categoryViewModel: CategoryViewModel by viewModels()
+    private lateinit var taskAdapter: TaskAdapter
+    private val taskViewModel: AddTaskViewModel by viewModels {
+        AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    }
 
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = _binding!!
@@ -38,54 +43,72 @@ class HomeScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupSearchBar()
+        setupCategoryRecyclerView()
+        setupAddTaskButton()
+        setupViewTaskButton()
+
+        setupInProgressRecyclerView()
+        observeInProgressTasks()
+    }
+
+    private fun setupSearchBar() {
         val searchText = binding.searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         searchText.hint = getString(R.string.search_task)
         searchText.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         searchText.setTextColor(Color.BLACK)
-
-        // button add
-        binding.btnAddTask.setOnClickListener{
-            findNavController().navigate(R.id.action_homeScreenFragment_to_addTaskFragment)
+    }
+    private fun setupInProgressRecyclerView() {
+        taskAdapter = TaskAdapter { task -> onTaskClick(task) }
+        binding.recyclerviewInProgress.apply {
+            adapter = taskAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-        // Setup RecyclerView for categories (horizontal)
+    }
+    private fun observeInProgressTasks() {
+        taskViewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
+            taskAdapter.submitList(tasks)
+        }
+        taskViewModel.categories.observe(viewLifecycleOwner) { categories ->
+            categories.forEach { category ->
+                taskAdapter.updateTaskCategory(category.id, category.title)
+            }
+        }
+    }
+
+//    @SuppressLint("StringFormatInvalid")
+//    private fun observeInProgressTaskCount() {
+//        taskViewModel.inProgressTaskCount.observe(viewLifecycleOwner) { count ->
+//            binding.tvInProgressNumber.text = getString(R.string.in_progress_task_count, count)
+//        }
+//    }
+
+    private fun onTaskClick(task: Task) {
+
+    }
+    private fun setupCategoryRecyclerView() {
         categoryAdapter = CategoryAdapter(emptyList())
-        binding.categoryRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerviewTaskGroup.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
         }
 
-        // Setup RecyclerView for task groups (vertical)
-        taskGroupAdapter = TaskGroupAdapter(emptyList())
-        binding.taskGroupRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = taskGroupAdapter
+        categoryViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
+            categories?.let {
+                categoryAdapter = CategoryAdapter(it)
+                binding.recyclerviewTaskGroup.adapter = categoryAdapter
+            }
         }
-
-        // Load dummy data and update adapters
-        loadDummyCategories()
-        loadDummyTaskGroups()
     }
-
-    private fun loadDummyCategories() {
-        val dummyCategories = listOf(
-            Category(1, "Work", 50.4F),
-            Category(2, "Study", 70.1F),
-            Category(3, "Entertainment", 20.6F),
-            Category(4, "Shopping", 15.0F)
-        )
-        categoryAdapter = CategoryAdapter(dummyCategories)
-        binding.categoryRecyclerView.adapter = categoryAdapter
+    private fun setupViewTaskButton(){
+        binding.btnViewTasks.setOnClickListener{
+            findNavController().navigate(R.id.action_homeScreenFragment_to_viewTaskFragment)
+        }
     }
-
-    private fun loadDummyTaskGroups() {
-        val dummyTaskGroups = listOf(
-            Category(1, "Work", 50.0F),
-            Category(2, "Study", 70.0F),
-            Category(3, "Entertainment", 20.0F),
-            Category(4, "Shopping", 80.5F)
-        )
-        taskGroupAdapter = TaskGroupAdapter(dummyTaskGroups)
-        binding.taskGroupRecyclerView.adapter = taskGroupAdapter
+    private fun setupAddTaskButton() {
+        binding.btnAddTask.setOnClickListener {
+            findNavController().navigate(R.id.action_homeScreenFragment_to_addTaskFragment)
+        }
     }
 
     override fun onDestroyView() {

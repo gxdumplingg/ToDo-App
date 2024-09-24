@@ -127,6 +127,49 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/tvTaskGroups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/poppins"
+        android:text="Task Groups"
+        android:textColor="@color/black"
+
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/todayTaskWidget" />
+
+    <TextView
+        android:id="@+id/tvTaskGroupNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_vertical"
+        android:text="5"
+        android:textColor="@color/dark_gray"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/tvTaskGroups"
+        app:layout_constraintTop_toBottomOf="@id/todayTaskWidget" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewTaskGroup"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:paddingEnd="8dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTaskGroups"
+        tools:listitem="@layout/item_category" />
+
+
+    <TextView
         android:id="@+id/tvInProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -134,10 +177,10 @@
         android:fontFamily="@font/poppins"
         android:text="@string/in_progress"
         android:textColor="@color/black"
-
         android:textSize="18sp"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todayTaskWidget" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerviewTaskGroup" />
 
     <TextView
         android:id="@+id/tvInProgressNumber"
@@ -152,61 +195,17 @@
         android:textColor="@color/dark_gray"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/tvInProgress"
-        app:layout_constraintTop_toBottomOf="@id/todayTaskWidget" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/category_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:paddingEnd="8dp"
-        android:scrollbars="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvInProgress"
-        tools:listitem="@layout/item_category" />
-
-
-    <TextView
-        android:id="@+id/tvTaskGroups"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/poppins"
-        android:text="Task Groups"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_recycler_view" />
-
-    <TextView
-        android:id="@+id/tvCategoryNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center_vertical"
-        android:text="5"
-        android:textColor="@color/dark_gray"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/tvTaskGroups"
-        app:layout_constraintTop_toBottomOf="@id/category_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@id/recyclerviewTaskGroup" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/task_group_recycler_view"
+        android:id="@+id/recyclerviewInProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTaskGroups"
-        tools:listitem="@layout/item_task_group" />
+        app:layout_constraintTop_toBottomOf="@id/tvInProgress"
+        tools:listitem="@layout/item_task" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_task"

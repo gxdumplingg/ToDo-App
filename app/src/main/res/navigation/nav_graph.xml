@@ -22,14 +22,66 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_viewTaskFragment"
+            app:destination="@id/viewTaskFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_detailedTaskFragment"
+            app:destination="@id/detailedTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.example.todoapp.ui.task.AddTaskFragment"
+        android:name="com.example.todoapp.ui.task.newtask.AddTaskFragment"
         android:label="Add Task"
         tools:layout="@layout/fragment_add_task">
         <action
             android:id="@+id/action_addTaskFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment" />
+        <argument
+            android:name="taskId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewTaskFragment"
+        android:name="com.example.todoapp.ui.task.viewTask.ViewTaskFragment"
+        android:label="fragment_view_task"
+        tools:layout="@layout/fragment_view_task">
+        <action
+            android:id="@+id/action_viewTaskFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_viewTaskFragment_to_detailedTaskFragment"
+            app:destination="@id/detailedTaskFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailedTaskFragment"
+        android:name="com.example.todoapp.ui.task.viewTask.DetailedTaskFragment"
+        android:label="fragment_detailed_task"
+        tools:layout="@layout/fragment_detailed_task">
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <argument
+            android:name="dueDate"
+            app:argType="long" />
+        <argument
+            android:name="status"
+            app:argType="string" />
+        <argument
+            android:name="timeStart"
+            app:argType="string" />
+        <argument
+            android:name="timeEnd"
+            app:argType="string" />
     </fragment>
 </navigation>

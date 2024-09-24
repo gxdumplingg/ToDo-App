@@ -23,6 +23,11 @@
     <string name="time_end">Time End</string>
     <string name="status">Status</string>
     <string name="priority">Priority</string>
+    <string name="error_time">Please choose end time > start time</string>
+    <string name="to_do">To Do</string>
+    <string name="done">Done</string>
+    <string name="save">Save</string>
+    <string name="in_progress_task_count">Task count</string>
 
     <string-array name="category_array">
         <item>Work</item>
