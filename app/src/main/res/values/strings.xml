@@ -7,4 +7,32 @@
     <string name="hello">Hello!</string>
     <string name="my_name">Le Huong Giang</string>
     <string name="in_progress">In Progress</string>
+    <string name="search_task">Search task</string>
+    <string name="your_today_task_almost_done">Your today\'s task \nalmost done</string>
+    <string name="view_task">View Task</string>
+    <string name="add_task">Add Task</string>
+    <string name="category">Category</string>
+    <string name="select_category">Select Category</string>
+    <string name="title">Title</string>
+    <string name="enter_task_title">Enter task title</string>
+    <string name="description">Description</string>
+    <string name="enter_description">Enter description...</string>
+    <string name="due_date">Due Date</string>
+    <string name="select_due_date">Select due date</string>
+    <string name="time_start">Time Start</string>
+    <string name="time_end">Time End</string>
+    <string name="status">Status</string>
+    <string name="priority">Priority</string>
+    <string name="error_time">Please choose end time > start time</string>
+    <string name="to_do">To Do</string>
+    <string name="done">Done</string>
+    <string name="save">Save</string>
+    <string name="in_progress_task_count">Task count</string>
+
+    <string-array name="category_array">
+        <item>Work</item>
+        <item>Education</item>
+        <item>Entertainment</item>
+        <item>Personal</item>
+    </string-array>
 </resources>
