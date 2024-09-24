@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TodoApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/dark_gray</item>
+        <item name="colorPrimaryVariant">@color/light_gray</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/yellow</item>
+        <item name="colorSecondaryVariant">@color/light_gray</item>
+        <item name="colorOnSecondary">@color/dark_gray</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="materialCalendarTheme">@style/CalendarTheme</item>
+    </style>
+
+    <!-- Custom Calendar Theme -->
+    <style name="CalendarTheme" parent="Widget.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/dark_gray</item>
+        <item name="colorPrimaryVariant">@color/light_gray</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+    <style name="CustomTitleHintStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColorHint">#8A8A8A</item>
+    </style>
+
+    <style name="TaskTextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+
+    <style name="TaskTextView.Selected" parent="TaskTextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/selected_task_background</item>
+    </style>
+
+    <style name="CustomContentHintStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">#8A8A8A</item>
+    </style>
+
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textColorHint">#000000</item>
+        <item name="android:icon">@drawable/ic_search</item>
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+</resources>

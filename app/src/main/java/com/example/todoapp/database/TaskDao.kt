@@ -8,11 +8,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.todoapp.model.Task
-import com.example.todoapp.model.TaskWithCategory
 
 @Dao
 interface TaskDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertTask(task: Task)
 
     @Update
@@ -21,10 +20,13 @@ interface TaskDao {
     @Delete
     suspend fun deleteTask(task: Task)
 
-    // Lấy tất cả task (không bị ẩn)
-    @Query("SELECT * FROM task_table WHERE isArchived = 0")
+    @Query("SELECT * FROM task_table")
     fun getAllTasks(): LiveData<List<Task>>
 
+    @Query("SELECT * FROM task_table WHERE status = :status ORDER BY dueDate ASC")
+    fun getTasksByStatus(status: String): LiveData<List<Task>>
 
+    @Query("SELECT COUNT(*) FROM task_table WHERE status = 'In Progress'")
+    fun getInProgressTaskCount(): LiveData<Int>
 }
 

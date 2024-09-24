@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 
-@Database(entities = [Task::class, Category::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
+@Database(entities = [Task::class, Category::class], version = 1)
 abstract class ToDoDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao

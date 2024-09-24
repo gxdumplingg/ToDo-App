@@ -16,7 +16,12 @@ class CategoryAdapter(private val categories: List<Category>) : RecyclerView.Ada
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
         return CategoryViewHolder(view)
     }
-
+    @SuppressLint("NotifyDataSetChanged")
+    fun submitList(newCategories: List<Category>) {
+        (categories as MutableList).clear()
+        categories.addAll(newCategories)
+        notifyDataSetChanged()
+    }
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categories[position]
         holder.bind(category)
@@ -35,7 +40,7 @@ class CategoryAdapter(private val categories: List<Category>) : RecyclerView.Ada
         fun bind(category: Category) {
             categoryName.text = category.title
             taskCount.text = "${category.completedPercent}%"
-            progressBar.progress = category.completedPercent
+            progressBar.progress = category.completedPercent.toInt()
         }
     }
 }
