@@ -1,6 +1,5 @@
 package com.example.todoapp.ui.home
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
