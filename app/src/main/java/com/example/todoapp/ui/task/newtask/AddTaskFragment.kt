@@ -1,5 +1,6 @@
 package com.example.todoapp.ui.task.newtask
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -13,14 +14,13 @@ import android.widget.TextView
 import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.databinding.CustomDialogBinding
 import com.example.todoapp.databinding.FragmentAddTaskBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 import com.example.todoapp.viewmodel.CategoryViewModel
-import com.example.todoapp.viewmodel.AddTaskViewModel
+import com.example.todoapp.viewmodel.TaskViewModel
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -29,8 +29,8 @@ class AddTaskFragment : Fragment() {
 
     private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
-    private val taskViewModel: AddTaskViewModel by viewModels {
-        AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val taskViewModel: TaskViewModel by viewModels {
+        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
     private val categoryViewModel: CategoryViewModel by viewModels()
     private var selectedCategoryId: Long = 0L
@@ -187,6 +187,7 @@ class AddTaskFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    @SuppressLint("DefaultLocale")
     private fun showTimePickerDialog(isStartTime: Boolean) {
         val calendar: Calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)

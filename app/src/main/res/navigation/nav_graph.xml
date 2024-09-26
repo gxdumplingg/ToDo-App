@@ -63,25 +63,7 @@
             android:name="id"
             app:argType="long" />
         <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="description"
-            app:argType="string" />
-        <argument
             android:name="categoryId"
             app:argType="long" />
-        <argument
-            android:name="dueDate"
-            app:argType="long" />
-        <argument
-            android:name="status"
-            app:argType="string" />
-        <argument
-            android:name="timeStart"
-            app:argType="string" />
-        <argument
-            android:name="timeEnd"
-            app:argType="string" />
     </fragment>
 </navigation>

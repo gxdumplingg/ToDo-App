@@ -216,19 +216,17 @@
                 android:id="@+id/tvDueDateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:fontFamily="@font/poppins"
                 android:text="@string/due_date"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/ivCalendarIcon"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/tvSelectedDueDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_dropdown"
                 android:clickable="true"
                 android:focusable="true"
@@ -424,6 +422,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:textColor="@color/white"
                     android:background="@drawable/status_selector_background"
                     android:text="@string/to_do" />
 
@@ -433,6 +433,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:textColor="@color/white"
+                    android:clickable="true"
                     android:background="@drawable/status_selector_background"
                     android:text="@string/in_progress" />
 
@@ -442,6 +444,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:textColor="@color/white"
+                    android:clickable="true"
                     android:background="@drawable/status_selector_background"
                     android:text="@string/done" />
 

@@ -2,20 +2,17 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home"/>
+        android:title=""/>
     <item
         android:id="@+id/nav_calendar"
         android:icon="@drawable/ic_calendar"
-        android:title="Calendar"/>
-    <item
-        android:id="@+id/placeholder"
-        android:title="" />
+        android:title=""/>
     <item
         android:id="@+id/nav_tasks"
         android:icon="@drawable/ic_today"
-        android:title="Today"/>
+        android:title=""/>
     <item
         android:id="@+id/nav_archived"
         android:icon="@drawable/ic_archive"
-        android:title="Archived"/>
+        android:title=""/>
 </menu>
