@@ -1,7 +1,6 @@
 package com.example.todoapp.ui.task.newtask
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.text.SimpleDateFormat
@@ -15,10 +14,10 @@ import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
-import com.example.todoapp.databinding.CustomDialogBinding
 import com.example.todoapp.databinding.FragmentAddTaskBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
+import com.example.todoapp.ui.dialog.SuccessDialog
 import com.example.todoapp.viewmodel.CategoryViewModel
 import com.example.todoapp.viewmodel.TaskViewModel
 import java.util.Calendar
@@ -151,10 +150,11 @@ class AddTaskFragment : Fragment() {
             )
 
             taskViewModel.addTask(newTask)
-            showDialog("Add Task", "Successfully added task")
+            val successDialog = SuccessDialog(requireContext()).apply {
+                message = "Successfully added"
+            }
+            successDialog.show()
             findNavController().popBackStack()
-        } else {
-            showDialog("Error", "Please fill in the task title.")
         }
     }
 
@@ -205,23 +205,6 @@ class AddTaskFragment : Fragment() {
             }, hour, minute, false)
 
         timePickerDialog.show()
-    }
-
-    private fun showDialog(title: String, message: String) {
-        val dialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(requireContext()))
-
-        dialogBinding.dialogTitle.text = title
-        dialogBinding.dialogMessage.text = message
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setView(dialogBinding.root)
-
-        val dialog = builder.create()
-
-        dialogBinding.dialogButton.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
     override fun onDestroyView() {
