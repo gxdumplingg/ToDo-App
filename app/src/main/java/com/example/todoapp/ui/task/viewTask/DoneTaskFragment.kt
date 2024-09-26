@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentDoneTaskBinding
 import com.example.todoapp.model.Task
-import com.example.todoapp.viewmodel.AddTaskViewModel
+import com.example.todoapp.viewmodel.TaskViewModel
 
 class DoneTaskFragment : Fragment() {
     private var _binding: FragmentDoneTaskBinding? = null
     private val binding get() = _binding!!
     private lateinit var taskAdapter: TaskAdapter
-    private val taskViewModel: AddTaskViewModel by viewModels {
-        AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val taskViewModel: TaskViewModel by viewModels {
+        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
 
     override fun onCreateView(
@@ -56,16 +56,7 @@ class DoneTaskFragment : Fragment() {
     }
 
     private fun onTaskClick(task: Task) {
-        val action = ViewTaskFragmentDirections.actionViewTaskFragmentToDetailedTaskFragment(
-            task.id,
-            task.title,
-            task.description,
-            task.categoryId,
-            task.dueDate.time,
-            task.status,
-            task.timeStart,
-            task.timeEnd
-        )
+        val action = ViewTaskFragmentDirections.actionViewTaskFragmentToDetailedTaskFragment(task.id, task.categoryId)
         findNavController().navigate(action)
     }
 

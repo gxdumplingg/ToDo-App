@@ -40,9 +40,15 @@ class TaskAdapter(private val onClick: (Task) -> Unit) : ListAdapter<Task, TaskA
 
             binding.taskTitle.text = task.title
             binding.taskCategory.text = categoryName
+
             binding.itemDueDate.text = dateFormat.format(task.dueDate)
 
-            when (task.status) {
+            // Chỉnh sửa để format lại trạng thái
+            val statusFormatted = formatStatus(task.status)
+            binding.itemStatus.text = statusFormatted
+
+            // Đặt màu sắc theo trạng thái
+            when (statusFormatted) {
                 "To Do" -> {
                     binding.itemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
                 }
@@ -53,8 +59,14 @@ class TaskAdapter(private val onClick: (Task) -> Unit) : ListAdapter<Task, TaskA
                     binding.itemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.green))
                 }
             }
-            binding.itemStatus.text = task.status
+
             binding.root.setOnClickListener { onClick(task) }
+        }
+
+        // Hàm format lại trạng thái
+        private fun formatStatus(status: String): String {
+            return status.split(" ")
+                .joinToString(" ") { it.capitalize() } // Chuyển chữ cái đầu tiên thành viết hoa
         }
     }
 

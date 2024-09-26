@@ -1,18 +1,22 @@
 package com.example.todoapp.ui.task.viewTask
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDetailedTaskBinding
-import com.example.todoapp.viewmodel.AddTaskViewModel
+import com.example.todoapp.viewmodel.TaskViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -21,14 +25,12 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentDetailedTaskBinding? = null
     private val binding get() = _binding!!
     private val args: DetailedTaskFragmentArgs by navArgs()
-    private val taskViewModel: AddTaskViewModel by viewModels {
-        AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val taskViewModel: TaskViewModel by viewModels {
+        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
+    private var selectedStatus: String = "To Do"
+    private var selectedCategoryId: Long = -1 // Lưu trữ ID category được chọn
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialog)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,37 +41,145 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-        bottomSheet?.let {
-            val layoutParams = it.layoutParams
-            layoutParams.height = (resources.displayMetrics.heightPixels * 2) / 3
-            it.layoutParams = layoutParams
+        dialog?.let { dialog ->
+            val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            bottomSheet?.layoutParams?.height = (resources.displayMetrics.heightPixels * 0.5).toInt()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            btnBack.setOnClickListener{
-                findNavController().popBackStack()
+
+
+        taskViewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
+            if (task != null) {
+                binding.title.setText(task.title)
+                binding.description.setText(task.description)
+                taskViewModel.categories.observe(viewLifecycleOwner) { categories ->
+                    val category = categories.find { it.id == args.categoryId }
+                    binding.category.setText(category?.title ?: "Unknown Category")
+                }
+                val dueDate = task.dueDate
+                binding.tvDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
+
+                // Gọi showDatePickerDialog với giá trị dueDate hiện tại
+                binding.tvDueDate.setOnClickListener {
+                    showDatePickerDialog(dueDate)
+                }
+                binding.tvTimeStart.text = task.timeStart
+                binding.tvTimeEnd.text = task.timeEnd
+
+                binding.tvTimeStart.setOnClickListener {
+                    showTimePickerDialog(task.timeStart, true) // true cho thời gian bắt đầu
+                }
+
+                binding.tvTimeEnd.setOnClickListener {
+                    showTimePickerDialog(task.timeEnd, false) // false cho thời gian kết thúc
+                }
+
+                // Cập nhật trạng thái task trên giao diện
+                selectedStatus = task.status // Cập nhật trạng thái hiện tại
+                updateStatusTextView(task.status)
             }
-
-            tvTitle.text = args.title
-            tvDescription.text = args.description
-            taskViewModel.categories.observe(viewLifecycleOwner) { categories ->
-                val category = categories.find { it.id == args.categoryId }
-                tvCategory.text = category?.title ?: "Unknown Category"
-            }
-
-            val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val formattedDueDate = dateFormatter.format(Date(args.dueDate))
-            tvDueDate.text = formattedDueDate
-
-            tvStatus.text = args.status
-            tvTimeStart.text = args.timeStart
-            tvTimeEnd.text = args.timeEnd
         }
 
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.tvTodo.setOnClickListener { updateStatus("To Do") }
+        binding.tvInProgress.setOnClickListener { updateStatus("In Progress") }
+        binding.tvDone.setOnClickListener { updateStatus("Done") }
+
+        binding.btnSave.setOnClickListener {
+            saveUpdatedTask()
+        }
+    }
+
+    private fun updateStatusTextView(status: String) {
+        binding.tvTodo.isSelected = status == "To Do"
+        binding.tvInProgress.isSelected = status == "In Progress"
+        binding.tvDone.isSelected = status == "Done"
+
+        // Đổi màu chữ tùy theo trạng thái được chọn
+        val selectedTextColor = ContextCompat.getColor(requireContext(), R.color.white)
+        val defaultTextColor = ContextCompat.getColor(requireContext(), R.color.black)
+
+        binding.tvTodo.setTextColor(if (binding.tvTodo.isSelected) selectedTextColor else defaultTextColor)
+        binding.tvInProgress.setTextColor(if (binding.tvInProgress.isSelected) selectedTextColor else defaultTextColor)
+        binding.tvDone.setTextColor(if (binding.tvDone.isSelected) selectedTextColor else defaultTextColor)
+    }
+
+    // Hàm cập nhật trạng thái được chọn
+    private fun updateStatus(newStatus: String) {
+        selectedStatus = newStatus
+        updateStatusTextView(newStatus) // Cập nhật lại UI
+    }
+
+    private fun saveUpdatedTask() {
+        taskViewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
+            if (task != null) {
+                val updatedTask = task.copy(
+                    title = binding.title.text.toString(),
+                    description = binding.description.text.toString(),
+                    status = selectedStatus
+                )
+                taskViewModel.updateTask(updatedTask)
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    private fun showDatePickerDialog(currentDueDate: Date) {
+        val calendar = Calendar.getInstance()
+        calendar.time = currentDueDate
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val dueDate = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }.time
+                binding.tvDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
+                taskViewModel.updateTaskDueDate(args.id, dueDate)
+            },
+            year,
+            month,
+            day
+        )
+
+        datePickerDialog.show()
+    }
+
+    private fun showTimePickerDialog(currentTime: String, isStartTime: Boolean) {
+        val timeParts = currentTime.split(":").map { it.toInt() }
+        val hour = timeParts[0]
+        val minute = timeParts[1]
+
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, selectedHour, selectedMinute ->
+                // Cập nhật TextView với thời gian mới
+                val updatedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+                if (isStartTime) {
+                    binding.tvTimeStart.text = updatedTime
+                    // Cập nhật trạng thái trong ViewModel
+                    taskViewModel.updateTaskStartTime(args.id, updatedTime)
+                } else {
+                    binding.tvTimeEnd.text = updatedTime
+                    // Cập nhật trạng thái trong ViewModel
+                    taskViewModel.updateTaskEndTime(args.id, updatedTime)
+                }
+            },
+            hour,
+            minute,
+            true // true để sử dụng định dạng 24 giờ
+        )
+
+        timePickerDialog.show()
     }
     override fun onDestroyView() {
         super.onDestroyView()

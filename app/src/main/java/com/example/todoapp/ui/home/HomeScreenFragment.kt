@@ -16,7 +16,7 @@ import com.example.todoapp.adapter.CategoryAdapter
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentHomeScreenBinding
 import com.example.todoapp.model.Task
-import com.example.todoapp.viewmodel.AddTaskViewModel
+import com.example.todoapp.viewmodel.TaskViewModel
 import com.example.todoapp.viewmodel.CategoryViewModel
 
 class HomeScreenFragment : Fragment() {
@@ -24,8 +24,8 @@ class HomeScreenFragment : Fragment() {
     private lateinit var categoryAdapter: CategoryAdapter
     private val categoryViewModel: CategoryViewModel by viewModels()
     private lateinit var taskAdapter: TaskAdapter
-    private val taskViewModel: AddTaskViewModel by viewModels {
-        AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val taskViewModel: TaskViewModel by viewModels {
+        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
 
     private var _binding: FragmentHomeScreenBinding? = null

@@ -28,6 +28,7 @@
     <string name="done">Done</string>
     <string name="save">Save</string>
     <string name="in_progress_task_count">Task count</string>
+    <string name="detailed_task">Detailed Task</string>
 
     <string-array name="category_array">
         <item>Work</item>

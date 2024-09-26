@@ -4,7 +4,6 @@ package com.example.todoapp.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
@@ -16,8 +15,9 @@ import com.example.todoapp.model.Task
 import com.example.todoapp.repository.CategoryRepository
 import com.example.todoapp.repository.TaskRepository
 import kotlinx.coroutines.launch
+import java.util.Date
 
-class AddTaskViewModel(application: Application) : AndroidViewModel(application) {
+class TaskViewModel(application: Application) : AndroidViewModel(application) {
     private val taskRepository: TaskRepository = TaskRepository(application)
     private val categoryRepository: CategoryRepository = CategoryRepository(application)
     val allTasks: LiveData<List<Task>> = taskRepository.allTasks
@@ -34,7 +34,9 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
             taskRepository.updateTask(task)
         }
     }
-
+    fun getTaskById(taskId: Long): LiveData<Task> {
+        return taskRepository.getTaskById(taskId)
+    }
     fun getCategoryNameById(categoryId: Long): LiveData<String?> {
         return categoryRepository.getCategoryById(categoryId).map { it?.title }
     }
@@ -48,20 +50,36 @@ class AddTaskViewModel(application: Application) : AndroidViewModel(application)
     fun getTasksByStatus(status: String): LiveData<List<Task>> {
         return taskRepository.getTasksByStatus(status)
     }
+    fun updateTaskDueDate(taskId: Long, newDueDate: Date) {
+        viewModelScope.launch {
+            taskRepository.updateTaskDueDate(taskId, newDueDate)
+        }
+    }
 
+    fun updateTaskStartTime(taskId: Long, newStartTime: String) {
+        viewModelScope.launch {
+            taskRepository.updateTaskStartTime(taskId, newStartTime)
+        }
+    }
+
+    fun updateTaskEndTime(taskId: Long, newEndTime: String) {
+        viewModelScope.launch {
+            taskRepository.updateTaskEndTime(taskId, newEndTime)
+        }
+    }
     val todoTasks: LiveData<List<Task>> = taskRepository.getTasksByStatus("To Do")
 
     val inProgressTasks: LiveData<List<Task>> = taskRepository.getTasksByStatus("In Progress")
 
     val doneTasks: LiveData<List<Task>> = taskRepository.getTasksByStatus("Done")
 
-//    val inProgressTaskCount: LiveData<Int> = taskDao.getInProgressTaskCount()
+
     class AddTaskViewModelFactory(private val application: Application) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AddTaskViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AddTaskViewModel(application) as T
+                return TaskViewModel(application) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

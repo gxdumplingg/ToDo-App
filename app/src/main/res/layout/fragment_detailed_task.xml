@@ -13,13 +13,25 @@
         android:id="@+id/tvDetailedTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detailed Task"
+        android:text="@string/detailed_task"
         android:fontFamily="@font/poppins"
         android:textColor="@color/dark_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/icDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cardviewCategory"
+        />
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
@@ -60,7 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvCategory"
+                android:id="@+id/category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_dropdown"
@@ -69,10 +81,31 @@
                 android:fontFamily="@font/poppins_regular"
                 android:padding="8dp"
                 android:textColor="@color/dark_gray"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCategoryLabel" />
+
+            <ImageView
+                android:id="@+id/icCategoryDropdown"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_dropdown"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.85" />
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -104,8 +137,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvTitle"
+            <EditText
+                android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_edit_text"
@@ -150,8 +183,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvDescription"
+            <EditText
+                android:id="@+id/description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_edit_text"
@@ -346,21 +379,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rounded_dropdown"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="8dp"
-                android:textColor="@color/dark_gray"
-                android:textSize="16sp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvStatusLabel" />
+                app:layout_constraintTop_toBottomOf="@id/tvStatusLabel">
+
+                <TextView
+                    android:id="@+id/tvTodo"
+                    style="@style/TaskTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/status_selector_background"
+                    android:text="@string/to_do" />
+
+                <TextView
+                    android:id="@+id/tvInProgress"
+                    style="@style/TaskTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/status_selector_background"
+                    android:text="@string/in_progress" />
+
+                <TextView
+                    android:id="@+id/tvDone"
+                    style="@style/TaskTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/status_selector_background"
+                    android:text="@string/done" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

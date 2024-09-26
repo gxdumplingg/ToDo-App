@@ -14,10 +14,17 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
             android:background="@color/dark_gray"
             android:textAlignment="center"
-            app:tabGravity="fill"
-            app:tabMode="fixed" />
+            app:tabTextAppearance="@style/tab_text"
+            app:tabIndicatorGravity="stretch"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabSelectedTextColor="@color/black"
+            app:tabIndicatorColor="@null"
+            app:tabIndicator="@drawable/tab_indicator"
+            app:tabMode="scrollable" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
