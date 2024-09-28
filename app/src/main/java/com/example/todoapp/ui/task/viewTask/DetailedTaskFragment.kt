@@ -1,19 +1,22 @@
 package com.example.todoapp.ui.task.viewTask
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDetailedTaskBinding
+import com.example.todoapp.model.Task
+import com.example.todoapp.ui.dialog.CustomDialog
 import com.example.todoapp.viewmodel.TaskViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Calendar
@@ -29,7 +32,6 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
     private var selectedStatus: String = "To Do"
-    private var selectedCategoryId: Long = -1 // Lưu trữ ID category được chọn
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +63,9 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
                 }
                 val dueDate = task.dueDate
                 binding.tvDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
-
+                binding.icDelete.setOnClickListener {
+                    showDeleteConfirmationDialog(task) // Hiển thị hộp thoại xác nhận
+                }
                 // Gọi showDatePickerDialog với giá trị dueDate hiện tại
                 binding.tvDueDate.setOnClickListener {
                     showDatePickerDialog(dueDate)
@@ -70,15 +74,14 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
                 binding.tvTimeEnd.text = task.timeEnd
 
                 binding.tvTimeStart.setOnClickListener {
-                    showTimePickerDialog(task.timeStart, true) // true cho thời gian bắt đầu
+                    showTimePickerDialog(task.timeStart, true)
                 }
 
                 binding.tvTimeEnd.setOnClickListener {
-                    showTimePickerDialog(task.timeEnd, false) // false cho thời gian kết thúc
+                    showTimePickerDialog(task.timeEnd, false)
                 }
 
-                // Cập nhật trạng thái task trên giao diện
-                selectedStatus = task.status // Cập nhật trạng thái hiện tại
+                selectedStatus = task.status
                 updateStatusTextView(task.status)
             }
         }
@@ -92,7 +95,9 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         binding.tvDone.setOnClickListener { updateStatus("Done") }
 
         binding.btnSave.setOnClickListener {
-            saveUpdatedTask()
+            showConfirmationDialog {
+                saveUpdatedTask()
+            }
         }
     }
 
@@ -180,6 +185,31 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         )
 
         timePickerDialog.show()
+    }
+    private fun showConfirmationDialog(onConfirm: () -> Unit) {
+        val dialogView = layoutInflater.inflate(R.layout.confirmation_dialog, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        dialogView.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogView.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+            onConfirm()
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showDeleteConfirmationDialog(task: Task) {
+        val customDialog = CustomDialog(requireContext()).apply {
+            message = "Are you sure you want to delete"
+            onConfirmClickListener = {
+                taskViewModel.deleteTask(task)
+                findNavController().popBackStack()
+            }
+        }
+        customDialog.show()
     }
     override fun onDestroyView() {
         super.onDestroyView()
