@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.task.viewTask
+package com.example.todoapp.ui.task.viewTask.tabTask
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,23 +9,25 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.adapter.TaskAdapter
-import com.example.todoapp.databinding.FragmentToDoTaskBinding
+import com.example.todoapp.databinding.FragmentAllTasksBinding
 import com.example.todoapp.model.Task
-import com.example.todoapp.viewmodel.TaskViewModel
+import com.example.todoapp.ui.task.viewTask.ViewTaskFragmentDirections
+import com.example.todoapp.ui.task.viewTask.ViewTasksViewModel
 
-class ToDoTaskFragment : Fragment() {
-    private var _binding: FragmentToDoTaskBinding? = null
+class AllTasksFragment : Fragment() {
+
+    private var _binding: FragmentAllTasksBinding? = null
     private val binding get() = _binding!!
     private lateinit var taskAdapter: TaskAdapter
-    private val taskViewModel: TaskViewModel by viewModels {
-        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val viewModel: ViewTasksViewModel by viewModels {
+        ViewTasksViewModel.ViewTasksViewModelFactory(requireActivity().application)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentToDoTaskBinding.inflate(inflater, container, false)
+        _binding = FragmentAllTasksBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,18 +39,21 @@ class ToDoTaskFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        taskAdapter = TaskAdapter { task -> onTaskClick(task) }
-        binding.recyclerViewToDoTask.apply {
+        taskAdapter = TaskAdapter { task ->
+            onTaskClick(task)
+        }
+        binding.recyclerViewAllTasks.apply {
             adapter = taskAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
 
     private fun observeTasks() {
-        taskViewModel.todoTasks.observe(viewLifecycleOwner) { tasks ->
+        viewModel.activeTasks.observe(viewLifecycleOwner) { tasks ->
             taskAdapter.submitList(tasks)
         }
-        taskViewModel.categories.observe(viewLifecycleOwner) { categories ->
+
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->
                 taskAdapter.updateTaskCategory(category.id, category.title)
             }
@@ -56,7 +61,10 @@ class ToDoTaskFragment : Fragment() {
     }
 
     private fun onTaskClick(task: Task) {
-        val action = ViewTaskFragmentDirections.actionViewTaskFragmentToDetailedTaskFragment(task.id, task.categoryId)
+        val action = ViewTaskFragmentDirections.actionViewTaskFragmentToDetailedTaskFragment(
+            task.id,
+            task.categoryId
+        )
         findNavController().navigate(action)
     }
 

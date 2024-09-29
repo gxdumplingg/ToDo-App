@@ -10,6 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.adapter.ViewPagerAdapter
 import com.example.todoapp.databinding.FragmentViewTaskBinding
+import com.example.todoapp.ui.task.viewTask.tabTask.AllTasksFragment
+import com.example.todoapp.ui.task.viewTask.tabTask.DoneTaskFragment
+import com.example.todoapp.ui.task.viewTask.tabTask.InProgressTaskFragment
+import com.example.todoapp.ui.task.viewTask.tabTask.ToDoTaskFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".ui.task.viewTask.ToDoTaskFragment">
+    tools:context=".ui.task.viewTask.tabTask.ToDoTaskFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewToDoTask"

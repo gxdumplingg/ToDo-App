@@ -2,36 +2,56 @@ package com.example.todoapp.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.room.Query
 import com.example.todoapp.database.TaskDao
 import com.example.todoapp.database.ToDoDatabase
 import com.example.todoapp.model.Task
 import java.util.Date
 
 class TaskRepository(context: Context) {
-    private val taskDAO: TaskDao = ToDoDatabase.getDatabase(context).taskDao()
-    suspend fun insertTask(task: Task) = taskDAO.insertTask(task)
-    suspend fun updateTask(task: Task) = taskDAO.updateTask(task)
-    suspend fun deleteTask(task: Task) = taskDAO.deleteTask(task)
+    private val taskDao: TaskDao = ToDoDatabase.getDatabase(context).taskDao()
+    suspend fun insertTask(task: Task) = taskDao.insertTask(task)
+    suspend fun updateTask(task: Task) = taskDao.updateTask(task)
+    suspend fun deleteTask(task: Task) = taskDao.deleteTask(task)
 
-    val allTasks: LiveData<List<Task>> = taskDAO.getAllTasks()
+    val allTasks: LiveData<List<Task>> = taskDao.getAllTasks()
     fun getTasksByStatus(status: String): LiveData<List<Task>> {
-        return taskDAO.getTasksByStatus(status)
+        return taskDao.getTasksByStatus(status)
     }
     fun getTaskById(id: Long): LiveData<Task> {
-        return taskDAO.getTaskById(id)
+        return taskDao.getTaskById(id)
     }
 
     suspend fun updateTaskDueDate(taskId: Long, newDueDate: Date) {
-        taskDAO.updateTaskDueDate(taskId, newDueDate)
+        taskDao.updateTaskDueDate(taskId, newDueDate)
     }
 
     suspend fun updateTaskStartTime(taskId: Long, newStartTime: String) {
-        taskDAO.updateTaskStartTime(taskId, newStartTime)
+        taskDao.updateTaskStartTime(taskId, newStartTime)
     }
 
     suspend fun updateTaskEndTime(taskId: Long, newEndTime: String) {
-        taskDAO.updateTaskEndTime(taskId, newEndTime)
+        taskDao.updateTaskEndTime(taskId, newEndTime)
     }
+    fun getRecentlyDeletedTasks(): LiveData<List<Task>> {
+        return taskDao.getRecentlyDeletedTasks()
+    }
+    suspend fun softDeleteTask(taskId: Long) {
+        taskDao.softDeleteTask(taskId)
+    }
+    suspend fun restoreTask(taskId: Long) {
+        taskDao.restoreTask(taskId)
+    }
+    fun getToDoTasks(): LiveData<List<Task>> {
+        return taskDao.getToDoTasks()
+    }
+
+    fun getInProgressTasks(): LiveData<List<Task>> {
+        return taskDao.getInProgressTasks()
+    }
+
+    fun getDoneTasks(): LiveData<List<Task>> {
+        return taskDao.getDoneTasks()
+    }
+
 
 }
