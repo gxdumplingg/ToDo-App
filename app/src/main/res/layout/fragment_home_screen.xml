@@ -46,17 +46,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvUsername"
         app:layout_constraintVertical_bias="0.0"
-        android:visibility="gone"
         app:queryBackground="@null"
+        android:visibility="gone"
         app:queryHint="@string/search_task" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/todayTaskWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="10dp"
         app:cardBackgroundColor="@color/yellow"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
@@ -67,7 +65,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/tvTaskMessage"

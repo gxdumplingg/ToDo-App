@@ -3,10 +3,8 @@ package com.example.todoapp
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.todoapp.viewmodel.CategoryViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> navController.navigate(R.id.homeScreenFragment)
 //                R.id.nav_calendar -> navController.navigate(R.id.nav_calendar)
                 R.id.nav_tasks -> navController.navigate(R.id.viewTaskFragment)
-//                R.id.nav_archived -> navController.navigate(R.id.nav_archived)
+                R.id.nav_archived -> navController.navigate(R.id.recentlyDeletedTaskFragment)
             }
             true
         }

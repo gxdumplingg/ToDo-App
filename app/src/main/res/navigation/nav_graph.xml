@@ -56,32 +56,19 @@
 
     <fragment
         android:id="@+id/detailedTaskFragment"
-        android:name="com.example.todoapp.ui.task.viewTask.DetailedTaskFragment"
+        android:name="com.example.todoapp.ui.task.viewTask.detailedTask.DetailedTaskFragment"
         android:label="fragment_detailed_task"
         tools:layout="@layout/fragment_detailed_task">
         <argument
             android:name="id"
             app:argType="long" />
         <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="description"
-            app:argType="string" />
-        <argument
             android:name="categoryId"
             app:argType="long" />
-        <argument
-            android:name="dueDate"
-            app:argType="long" />
-        <argument
-            android:name="status"
-            app:argType="string" />
-        <argument
-            android:name="timeStart"
-            app:argType="string" />
-        <argument
-            android:name="timeEnd"
-            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/recentlyDeletedTaskFragment"
+        android:name="com.example.todoapp.ui.recentlyDeleted.RecentlyDeletedTaskFragment"
+        android:label="fragment_archived_task"
+        tools:layout="@layout/fragment_recently_deleted_task" />
 </navigation>

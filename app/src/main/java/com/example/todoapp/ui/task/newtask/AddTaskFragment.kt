@@ -1,6 +1,6 @@
 package com.example.todoapp.ui.task.newtask
 
-import android.app.AlertDialog
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.text.SimpleDateFormat
@@ -13,14 +13,12 @@ import android.widget.TextView
 import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
-import com.example.todoapp.databinding.CustomDialogBinding
 import com.example.todoapp.databinding.FragmentAddTaskBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
+import com.example.todoapp.ui.dialog.SuccessDialog
 import com.example.todoapp.viewmodel.CategoryViewModel
-import com.example.todoapp.viewmodel.AddTaskViewModel
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -47,11 +45,11 @@ class AddTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addSampleCategories()
+        setCategories()
         setupClickListeners()
     }
 
-    private fun addSampleCategories() {
+    private fun setCategories() {
         val categories = listOf(
             Category(id = 1L, title = "Work", completedPercent = 0f),
             Category(id = 2L, title = "Education", completedPercent = 0f),
@@ -67,9 +65,13 @@ class AddTaskFragment : Fragment() {
     private fun setupClickListeners() {
         binding.apply {
             icCategoryDropdown.setOnClickListener { showCategoryDropdownMenu() }
+            tvSelectedCategory.setOnClickListener{ showCategoryDropdownMenu() }
             icDueDateDropdown.setOnClickListener { showDatePickerDialog() }
+            tvSelectedDueDate.setOnClickListener { showDatePickerDialog() }
             icTimeStartDropdown.setOnClickListener { showTimePickerDialog(true) }
+            tvTimeStart.setOnClickListener { showTimePickerDialog(true) }
             icTimeEndDropdown.setOnClickListener { showTimePickerDialog(false) }
+            tvTimeEnd.setOnClickListener { showTimePickerDialog(false) }
             btnAddTask.setOnClickListener { addTaskToDatabase() }
             btnBack.setOnClickListener { findNavController().popBackStack() }
 
@@ -147,14 +149,16 @@ class AddTaskFragment : Fragment() {
                 timeEnd = timeEnd,
                 categoryId = selectedCategoryId,
                 status = selectedStatus,
-                description = description
+                description = description,
+                isDeleted = false
             )
 
             taskViewModel.addTask(newTask)
-            showDialog("Add Task", "Successfully added task")
+            val successDialog = SuccessDialog(requireContext()).apply {
+                message = "Successfully added"
+            }
+            successDialog.show()
             findNavController().popBackStack()
-        } else {
-            showDialog("Error", "Please fill in the task title.")
         }
     }
 
@@ -187,6 +191,7 @@ class AddTaskFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    @SuppressLint("DefaultLocale")
     private fun showTimePickerDialog(isStartTime: Boolean) {
         val calendar: Calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -204,23 +209,6 @@ class AddTaskFragment : Fragment() {
             }, hour, minute, false)
 
         timePickerDialog.show()
-    }
-
-    private fun showDialog(title: String, message: String) {
-        val dialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(requireContext()))
-
-        dialogBinding.dialogTitle.text = title
-        dialogBinding.dialogMessage.text = message
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setView(dialogBinding.root)
-
-        val dialog = builder.create()
-
-        dialogBinding.dialogButton.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
     override fun onDestroyView() {
