@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/detailedTaskFragment"
-        android:name="com.example.todoapp.ui.task.viewTask.DetailedTaskFragment"
+        android:name="com.example.todoapp.ui.task.viewTask.detailedTask.DetailedTaskFragment"
         android:label="fragment_detailed_task"
         tools:layout="@layout/fragment_detailed_task">
         <argument
@@ -66,4 +66,9 @@
             android:name="categoryId"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/archivedTaskFragment"
+        android:name="com.example.todoapp.ui.recentlyDeleted.RecentlyDeletedTaskFragment"
+        android:label="fragment_archived_task"
+        tools:layout="@layout/fragment_archived_task" />
 </navigation>

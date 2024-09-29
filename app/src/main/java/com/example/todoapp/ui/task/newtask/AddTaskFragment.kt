@@ -19,7 +19,6 @@ import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 import com.example.todoapp.ui.dialog.SuccessDialog
 import com.example.todoapp.viewmodel.CategoryViewModel
-import com.example.todoapp.viewmodel.TaskViewModel
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -28,8 +27,8 @@ class AddTaskFragment : Fragment() {
 
     private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
-    private val taskViewModel: TaskViewModel by viewModels {
-        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val taskViewModel: AddTaskViewModel by viewModels {
+        AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
     private val categoryViewModel: CategoryViewModel by viewModels()
     private var selectedCategoryId: Long = 0L

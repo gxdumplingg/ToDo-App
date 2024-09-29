@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> navController.navigate(R.id.homeScreenFragment)
 //                R.id.nav_calendar -> navController.navigate(R.id.nav_calendar)
                 R.id.nav_tasks -> navController.navigate(R.id.viewTaskFragment)
-//                R.id.nav_archived -> navController.navigate(R.id.nav_archived)
+                R.id.nav_archived -> navController.navigate(R.id.archivedTaskFragment)
             }
             true
         }

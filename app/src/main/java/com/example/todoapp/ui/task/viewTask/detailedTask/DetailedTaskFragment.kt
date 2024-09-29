@@ -1,4 +1,4 @@
-package com.example.todoapp.ui.task.viewTask
+package com.example.todoapp.ui.task.viewTask.detailedTask
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -17,7 +17,6 @@ import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDetailedTaskBinding
 import com.example.todoapp.model.Task
 import com.example.todoapp.ui.dialog.CustomDialog
-import com.example.todoapp.viewmodel.TaskViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Calendar
 import java.util.Date
@@ -28,8 +27,8 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentDetailedTaskBinding? = null
     private val binding get() = _binding!!
     private val args: DetailedTaskFragmentArgs by navArgs()
-    private val taskViewModel: TaskViewModel by viewModels {
-        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val viewModel: DetailedTaskViewModel by viewModels {
+        DetailedTaskViewModel.DetailedTaskViewModelFactory(requireActivity().application)
     }
     private var selectedStatus: String = "To Do"
 
@@ -53,11 +52,11 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        taskViewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
+        viewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
             if (task != null) {
                 binding.title.setText(task.title)
                 binding.description.setText(task.description)
-                taskViewModel.categories.observe(viewLifecycleOwner) { categories ->
+                viewModel.categories.observe(viewLifecycleOwner) { categories ->
                     val category = categories.find { it.id == args.categoryId }
                     binding.category.setText(category?.title ?: "Unknown Category")
                 }
@@ -122,14 +121,14 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
     }
 
     private fun saveUpdatedTask() {
-        taskViewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
+        viewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
             if (task != null) {
                 val updatedTask = task.copy(
                     title = binding.title.text.toString(),
                     description = binding.description.text.toString(),
                     status = selectedStatus
                 )
-                taskViewModel.updateTask(updatedTask)
+                viewModel.updateTask(updatedTask)
                 findNavController().popBackStack()
             }
         }
@@ -149,7 +148,7 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
                     set(selectedYear, selectedMonth, selectedDay)
                 }.time
                 binding.tvDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
-                taskViewModel.updateTaskDueDate(args.id, dueDate)
+                viewModel.updateTaskDueDate(args.id, dueDate)
             },
             year,
             month,
@@ -167,21 +166,18 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         val timePickerDialog = TimePickerDialog(
             requireContext(),
             { _, selectedHour, selectedMinute ->
-                // Cập nhật TextView với thời gian mới
                 val updatedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
                 if (isStartTime) {
                     binding.tvTimeStart.text = updatedTime
-                    // Cập nhật trạng thái trong ViewModel
-                    taskViewModel.updateTaskStartTime(args.id, updatedTime)
+                    viewModel.updateTaskStartTime(args.id, updatedTime)
                 } else {
                     binding.tvTimeEnd.text = updatedTime
-                    // Cập nhật trạng thái trong ViewModel
-                    taskViewModel.updateTaskEndTime(args.id, updatedTime)
+                    viewModel.updateTaskEndTime(args.id, updatedTime)
                 }
             },
             hour,
             minute,
-            true // true để sử dụng định dạng 24 giờ
+            true
         )
 
         timePickerDialog.show()
@@ -205,7 +201,7 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         val customDialog = CustomDialog(requireContext()).apply {
             message = "Are you sure you want to delete"
             onConfirmClickListener = {
-                taskViewModel.deleteTask(task)
+                viewModel.deleteTask(task)
                 findNavController().popBackStack()
             }
         }

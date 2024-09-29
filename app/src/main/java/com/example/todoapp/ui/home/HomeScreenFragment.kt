@@ -16,7 +16,6 @@ import com.example.todoapp.adapter.CategoryAdapter
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentHomeScreenBinding
 import com.example.todoapp.model.Task
-import com.example.todoapp.viewmodel.TaskViewModel
 import com.example.todoapp.viewmodel.CategoryViewModel
 
 class HomeScreenFragment : Fragment() {
@@ -24,8 +23,8 @@ class HomeScreenFragment : Fragment() {
     private lateinit var categoryAdapter: CategoryAdapter
     private val categoryViewModel: CategoryViewModel by viewModels()
     private lateinit var taskAdapter: TaskAdapter
-    private val taskViewModel: TaskViewModel by viewModels {
-        TaskViewModel.AddTaskViewModelFactory(requireActivity().application)
+    private val taskViewModel: HomeScreenViewModel by viewModels {
+        HomeScreenViewModel.HomeScreenViewModelFactory(requireActivity().application)
     }
 
     private var _binding: FragmentHomeScreenBinding? = null
@@ -74,13 +73,6 @@ class HomeScreenFragment : Fragment() {
             }
         }
     }
-
-//    @SuppressLint("StringFormatInvalid")
-//    private fun observeInProgressTaskCount() {
-//        taskViewModel.inProgressTaskCount.observe(viewLifecycleOwner) { count ->
-//            binding.tvInProgressNumber.text = getString(R.string.in_progress_task_count, count)
-//        }
-//    }
 
     private fun onTaskClick(task: Task) {
 

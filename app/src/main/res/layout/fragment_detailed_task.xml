@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="12dp"
-    tools:context=".ui.task.viewTask.DetailedTaskFragment">
+    tools:context=".ui.task.viewTask.detailedTask.DetailedTaskFragment">
 
     <TextView
         android:id="@+id/tvDetailedTask"
