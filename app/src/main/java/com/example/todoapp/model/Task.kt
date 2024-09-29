@@ -23,5 +23,6 @@ data class Task(
     val timeEnd: String,
     val categoryId: Long,
     val status: String,
-    val description: String
+    val description: String,
+    val isDeleted: Boolean
 )

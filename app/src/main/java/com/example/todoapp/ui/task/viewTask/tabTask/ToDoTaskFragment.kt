@@ -46,7 +46,7 @@ class ToDoTaskFragment : Fragment() {
     }
 
     private fun observeTasks() {
-        viewModel.todoTasks.observe(viewLifecycleOwner) { tasks ->
+        viewModel.toDoTasks.observe(viewLifecycleOwner) { tasks ->
             taskAdapter.submitList(tasks)
         }
         viewModel.categories.observe(viewLifecycleOwner) { categories ->

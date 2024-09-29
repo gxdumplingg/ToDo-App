@@ -42,9 +42,9 @@ class DetailedTaskViewModel(application: Application) : AndroidViewModel(applica
             taskRepository.updateTaskEndTime(taskId, newEndTime)
         }
     }
-    fun deleteTask(task: Task) {
+    fun softDeleteTask(taskId: Long) {
         viewModelScope.launch {
-            taskRepository.deleteTask(task)
+            taskRepository.softDeleteTask(taskId)
         }
     }
 

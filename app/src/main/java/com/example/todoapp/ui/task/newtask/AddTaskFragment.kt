@@ -45,11 +45,11 @@ class AddTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addSampleCategories()
+        setCategories()
         setupClickListeners()
     }
 
-    private fun addSampleCategories() {
+    private fun setCategories() {
         val categories = listOf(
             Category(id = 1L, title = "Work", completedPercent = 0f),
             Category(id = 2L, title = "Education", completedPercent = 0f),
@@ -65,9 +65,13 @@ class AddTaskFragment : Fragment() {
     private fun setupClickListeners() {
         binding.apply {
             icCategoryDropdown.setOnClickListener { showCategoryDropdownMenu() }
+            tvSelectedCategory.setOnClickListener{ showCategoryDropdownMenu() }
             icDueDateDropdown.setOnClickListener { showDatePickerDialog() }
+            tvSelectedDueDate.setOnClickListener { showDatePickerDialog() }
             icTimeStartDropdown.setOnClickListener { showTimePickerDialog(true) }
+            tvTimeStart.setOnClickListener { showTimePickerDialog(true) }
             icTimeEndDropdown.setOnClickListener { showTimePickerDialog(false) }
+            tvTimeEnd.setOnClickListener { showTimePickerDialog(false) }
             btnAddTask.setOnClickListener { addTaskToDatabase() }
             btnBack.setOnClickListener { findNavController().popBackStack() }
 
@@ -145,7 +149,8 @@ class AddTaskFragment : Fragment() {
                 timeEnd = timeEnd,
                 categoryId = selectedCategoryId,
                 status = selectedStatus,
-                description = description
+                description = description,
+                isDeleted = false
             )
 
             taskViewModel.addTask(newTask)

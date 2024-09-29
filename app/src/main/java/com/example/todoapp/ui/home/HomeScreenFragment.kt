@@ -16,6 +16,7 @@ import com.example.todoapp.adapter.CategoryAdapter
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentHomeScreenBinding
 import com.example.todoapp.model.Task
+import com.example.todoapp.ui.task.viewTask.ViewTaskFragmentDirections
 import com.example.todoapp.viewmodel.CategoryViewModel
 
 class HomeScreenFragment : Fragment() {
@@ -23,7 +24,7 @@ class HomeScreenFragment : Fragment() {
     private lateinit var categoryAdapter: CategoryAdapter
     private val categoryViewModel: CategoryViewModel by viewModels()
     private lateinit var taskAdapter: TaskAdapter
-    private val taskViewModel: HomeScreenViewModel by viewModels {
+    private val viewModel: HomeScreenViewModel by viewModels {
         HomeScreenViewModel.HomeScreenViewModelFactory(requireActivity().application)
     }
 
@@ -64,10 +65,10 @@ class HomeScreenFragment : Fragment() {
         }
     }
     private fun observeInProgressTasks() {
-        taskViewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
+        viewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
             taskAdapter.submitList(tasks)
         }
-        taskViewModel.categories.observe(viewLifecycleOwner) { categories ->
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->
                 taskAdapter.updateTaskCategory(category.id, category.title)
             }
@@ -75,7 +76,10 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun onTaskClick(task: Task) {
-
+        val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToDetailedTaskFragment(
+            task.id,
+            task.categoryId)
+        findNavController().navigate(action)
     }
     private fun setupCategoryRecyclerView() {
         categoryAdapter = CategoryAdapter(emptyList())
@@ -93,7 +97,8 @@ class HomeScreenFragment : Fragment() {
     }
     private fun setupViewTaskButton(){
         binding.btnViewTasks.setOnClickListener{
-            findNavController().navigate(R.id.action_homeScreenFragment_to_viewTaskFragment)
+            val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToViewTaskFragment()
+            findNavController().navigate(action)
         }
     }
     private fun setupAddTaskButton() {

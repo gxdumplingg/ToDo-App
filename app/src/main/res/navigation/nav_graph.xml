@@ -67,8 +67,8 @@
             app:argType="long" />
     </fragment>
     <fragment
-        android:id="@+id/archivedTaskFragment"
+        android:id="@+id/recentlyDeletedTaskFragment"
         android:name="com.example.todoapp.ui.recentlyDeleted.RecentlyDeletedTaskFragment"
         android:label="fragment_archived_task"
-        tools:layout="@layout/fragment_archived_task" />
+        tools:layout="@layout/fragment_recently_deleted_task" />
 </navigation>

@@ -49,7 +49,7 @@ class AllTasksFragment : Fragment() {
     }
 
     private fun observeTasks() {
-        viewModel.allTasks.observe(viewLifecycleOwner) { tasks ->
+        viewModel.activeTasks.observe(viewLifecycleOwner) { tasks ->
             taskAdapter.submitList(tasks)
         }
 

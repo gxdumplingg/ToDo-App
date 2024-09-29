@@ -15,7 +15,7 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
     private val categoryRepository: CategoryRepository = CategoryRepository(application)
 
 
-    val inProgressTasks: LiveData<List<Task>> = taskRepository.getTasksByStatus("In Progress")
+    val inProgressTasks: LiveData<List<Task>> = taskRepository.getInProgressTasks()
     val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
 
     class HomeScreenViewModelFactory(private val application: Application) :

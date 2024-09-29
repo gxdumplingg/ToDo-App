@@ -45,5 +45,25 @@ interface TaskDao {
 
     @Query("UPDATE task_table SET timeEnd = :newEndTime WHERE id = :taskId")
     suspend fun updateTaskEndTime(taskId: Long, newEndTime: String)
+
+    @Query("SELECT * FROM task_table WHERE isDeleted = 1")
+    fun getRecentlyDeletedTasks(): LiveData<List<Task>>
+    @Query("UPDATE task_table SET isDeleted = 1 WHERE id = :taskId")
+    suspend fun softDeleteTask(taskId: Long)
+    @Query("UPDATE task_table SET isDeleted = 0 WHERE id = :taskId")
+    suspend fun restoreTask(taskId: Long)
+
+    @Query("SELECT * FROM task_table WHERE isDeleted = 0")
+    fun getAllActiveTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM task_table WHERE status = 'To Do' AND isDeleted = 0")
+    fun getToDoTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM task_table WHERE status = 'In Progress' AND isDeleted = 0")
+    fun getInProgressTasks(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM task_table WHERE status = 'Done' AND isDeleted = 0")
+    fun getDoneTasks(): LiveData<List<Task>>
+
 }
 

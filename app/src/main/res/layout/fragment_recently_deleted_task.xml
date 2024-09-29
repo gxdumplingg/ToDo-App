@@ -38,13 +38,13 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewArchivedTask"
+        android:id="@+id/rvRecentlyDeletedTask"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardview"
-        tools:listitem="@layout/item_task" />
+        tools:listitem="@layout/item_recently_deleted_task" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
