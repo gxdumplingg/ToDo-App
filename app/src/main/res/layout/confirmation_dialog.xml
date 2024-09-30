@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/rounded_background"
+    android:backgroundTint="@color/dark_gray"
     android:padding="16dp">
 
     <TextView
@@ -20,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Are you sure you want to update new task?"
+        android:textSize="16sp"
         android:fontFamily="@font/poppins_regular"
         android:layout_marginTop="8dp" />
 
@@ -31,18 +34,26 @@
         android:gravity="end">
 
         <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/white"
-            android:text="No" />
-
-        <Button
             android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yes"
+            android:fontFamily="@font/poppins"
+            android:background="@drawable/button_background"
+            android:backgroundTint="@color/light_gray"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:text="Yes" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:background="@drawable/button_background"
+            android:backgroundTint="@color/light_gray"
             android:textColor="@color/white"
             android:fontFamily="@font/poppins"
             android:layout_marginStart="8dp" />

@@ -31,6 +31,8 @@
     <string name="detailed_task">Detailed Task</string>
     <string name="archived_task">Archived Task</string>
     <string name="recently_deleted">Recently Deleted</string>
+    <string name="calendar">Calendar</string>
+    <string name="no_tasks_displayed">No Tasks Displayed</string>
 
     <string-array name="category_array">
         <item>Work</item>

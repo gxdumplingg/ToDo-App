@@ -52,6 +52,12 @@ class TaskRepository(context: Context) {
     fun getDoneTasks(): LiveData<List<Task>> {
         return taskDao.getDoneTasks()
     }
+    fun getTaskByDueDate(dueDate: Date): LiveData<List<Task>>{
+        return taskDao.getTasksByDueDate(dueDate)
+    }
+    fun getAllActiveTasks(): LiveData<List<Task>> {
+        return taskDao.getAllActiveTasks()
+    }
 
 
 }
