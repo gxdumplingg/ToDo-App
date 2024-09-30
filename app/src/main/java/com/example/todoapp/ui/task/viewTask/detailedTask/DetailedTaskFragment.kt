@@ -86,7 +86,7 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         }
 
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            showBackDialog()
         }
 
         binding.tvTodo.setOnClickListener { updateStatus("To Do") }
@@ -143,7 +143,6 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         binding.tvInProgress.setTextColor(if (binding.tvInProgress.isSelected) selectedTextColor else defaultTextColor)
         binding.tvDone.setTextColor(if (binding.tvDone.isSelected) selectedTextColor else defaultTextColor)
     }
-
 
     private fun updateStatus(newStatus: String) {
         selectedStatus = newStatus
@@ -238,6 +237,15 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         customDialog.show()
     }
 
+    private fun showBackDialog(){
+        val customDialog = CustomDialog(requireContext()).apply {
+            message = "Changes you made may not be saved. \nDo you want to leave?"
+            onConfirmClickListener = {
+                findNavController().popBackStack()
+            }
+        }
+        customDialog.show()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -39,9 +39,15 @@ class RecentlyDeletedTaskFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
         }
-
         viewModel.recentlyDeletedTasks.observe(viewLifecycleOwner) { recentlyDeletedTasks ->
-            adapter.submitList(recentlyDeletedTasks)
+            if (recentlyDeletedTasks.isEmpty()) {
+                binding.tvNoTasks.visibility = View.VISIBLE
+                binding.rvRecentlyDeletedTask.visibility = View.GONE
+            } else {
+                binding.tvNoTasks.visibility = View.GONE
+                binding.rvRecentlyDeletedTask.visibility = View.VISIBLE
+                adapter.submitList(recentlyDeletedTasks)
+            }
         }
     }
 

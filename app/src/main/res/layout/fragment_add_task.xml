@@ -422,9 +422,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@drawable/text_color_selector"
                     android:background="@drawable/status_selector_background"
                     android:text="@string/to_do" />
 
@@ -434,8 +432,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:textColor="@color/dark_gray"
-                    android:clickable="true"
+                    android:textColor="@drawable/text_color_selector"
                     android:background="@drawable/status_selector_background"
                     android:text="@string/in_progress" />
 
@@ -445,8 +442,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:textColor="@color/dark_gray"
-                    android:clickable="true"
+                    android:textColor="@drawable/text_color_selector"
                     android:background="@drawable/status_selector_background"
                     android:text="@string/done" />
 

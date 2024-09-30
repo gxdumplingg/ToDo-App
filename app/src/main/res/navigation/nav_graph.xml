@@ -71,4 +71,13 @@
         android:name="com.example.todoapp.ui.recentlyDeleted.RecentlyDeletedTaskFragment"
         android:label="fragment_archived_task"
         tools:layout="@layout/fragment_recently_deleted_task" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.todoapp.ui.calendar.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+    </fragment>
 </navigation>
