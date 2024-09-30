@@ -33,6 +33,7 @@
     <string name="recently_deleted">Recently Deleted</string>
     <string name="calendar">Calendar</string>
     <string name="no_tasks_displayed">No Tasks Displayed</string>
+    <string name="selected_date">Selected Date</string>
 
     <string-array name="category_array">
         <item>Work</item>

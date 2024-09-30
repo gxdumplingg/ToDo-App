@@ -146,7 +146,7 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
 
     private fun updateStatus(newStatus: String) {
         selectedStatus = newStatus
-        updateStatusTextView(newStatus) // Cập nhật lại UI
+        updateStatusTextView(newStatus)
     }
 
     private fun saveUpdatedTask() {

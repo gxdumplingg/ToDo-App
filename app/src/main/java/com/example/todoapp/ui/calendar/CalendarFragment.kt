@@ -5,23 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.applandeo.materialcalendarview.CalendarDay
-import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.listeners.OnCalendarDayClickListener
 import com.example.todoapp.adapter.CalendarTaskAdapter
 import com.example.todoapp.databinding.FragmentCalendarBinding
+import com.example.todoapp.model.Task
 import java.util.*
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
-    private lateinit var calendarView: CalendarView
-    private lateinit var tasksRecyclerView: RecyclerView
-    private val adapter = CalendarTaskAdapter()
-    private val calendarViewModel: CalendarViewModel by viewModels()
+    private lateinit var calendarTaskAdapter: CalendarTaskAdapter
+    private val viewModel: CalendarViewModel by viewModels(){
+        CalendarViewModel.CalendarViewModelFactory(requireActivity().application)
+    }
+    private lateinit var selectedDateTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,34 +35,48 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        calendarView = binding.calendarView
-        tasksRecyclerView = binding.rvCalendarTask
+        setupRecyclerView()
 
-        tasksRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        tasksRecyclerView.adapter = adapter
+        selectedDateTextView = binding.tvSelectedDate
 
-
-        calendarView.setOnCalendarDayClickListener(object : OnCalendarDayClickListener {
+        binding.calendarView.setOnCalendarDayClickListener(object : OnCalendarDayClickListener {
             override fun onClick(calendarDay: CalendarDay) {
                 val selectedDate = calendarDay.calendar.time
+                selectedDateTextView.text = formatDate(selectedDate)
                 loadTasksForSelectedDate(selectedDate)
             }
         })
     }
-
+    private fun setupRecyclerView() {
+        calendarTaskAdapter = CalendarTaskAdapter { task ->
+            onTaskClick(task)
+        }
+        binding.rvCalendarTask.apply {
+            adapter = calendarTaskAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+    private fun formatDate(date: Date): String {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        return "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH) + 1}/${calendar.get(Calendar.YEAR)}"
+    }
     private fun loadTasksForSelectedDate(selectedDate: Date) {
-        val calendar = Calendar.getInstance().apply {
-            time = selectedDate
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
+        viewModel.getTasksByDueDate(selectedDate).observe(viewLifecycleOwner) { tasks ->
+            calendarTaskAdapter.submitList(tasks)
         }
-        val dueDate = calendar.time
-
-        calendarViewModel.getTasksByDueDate(dueDate).observe(viewLifecycleOwner) { tasks ->
-            adapter.submitList(tasks)
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+            categories.forEach { category ->
+                calendarTaskAdapter.updateTaskCategory(category.id, category.title)
+            }
         }
+    }
+    private fun onTaskClick(task: Task) {
+        val action = CalendarFragmentDirections.actionCalendarFragmentToDetailedTaskFragment(
+            task.id,
+            task.categoryId
+        )
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

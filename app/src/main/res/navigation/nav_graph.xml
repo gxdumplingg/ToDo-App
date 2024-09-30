@@ -77,7 +77,7 @@
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" >
         <action
-            android:id="@+id/action_calendarFragment_to_addTaskFragment"
-            app:destination="@id/addTaskFragment" />
+            android:id="@+id/action_calendarFragment_to_detailedTaskFragment"
+            app:destination="@id/detailedTaskFragment" />
     </fragment>
 </navigation>

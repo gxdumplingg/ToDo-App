@@ -19,19 +19,13 @@ class ViewTasksViewModel(application: Application) : AndroidViewModel(applicatio
     private val taskDao: TaskDao = ToDoDatabase.getDatabase(application).taskDao()
     private val taskRepository: TaskRepository = TaskRepository(application)
     private val categoryRepository: CategoryRepository = CategoryRepository(application)
-    val recentlyDeletedTasks: LiveData<List<Task>> = taskRepository.getRecentlyDeletedTasks()
     val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
 
     val activeTasks: LiveData<List<Task>> = taskDao.getAllActiveTasks()
-    val deletedTasks: LiveData<List<Task>> = taskDao.getRecentlyDeletedTasks()
-//
     val toDoTasks: LiveData<List<Task>> = taskRepository.getToDoTasks()
     val inProgressTasks: LiveData<List<Task>> = taskRepository.getInProgressTasks()
     val doneTasks: LiveData<List<Task>> = taskRepository.getDoneTasks()
-//
-    fun softDeleteTask(taskId: Long) = viewModelScope.launch {
-        taskRepository.softDeleteTask(taskId)
-    }
+
     class ViewTasksViewModelFactory(private val application: Application) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
