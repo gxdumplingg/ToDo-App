@@ -1,12 +1,12 @@
 package com.example.todoapp.ui.home
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.core.content.ContextCompat
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -42,21 +42,30 @@ class HomeScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupSearchBar()
+//        setupSearchBar()
         setupCategoryRecyclerView()
         setupAddTaskButton()
         setupViewTaskButton()
 
         setupInProgressRecyclerView()
         observeInProgressTasks()
-    }
 
-    private fun setupSearchBar() {
-        val searchText = binding.searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-        searchText.hint = getString(R.string.search_task)
-        searchText.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-        searchText.setTextColor(Color.BLACK)
+        viewModel.completionPercentage.observe(viewLifecycleOwner) { percentage ->
+            updateProgressCircle(percentage)
+            binding.progressCircle.progress = percentage
+            binding.tvPercentage.text = "$percentage%"
+        }
     }
+    private fun updateProgressCircle(percentage: Int) {
+        val progressBar = view?.findViewById<ProgressBar>(R.id.progressCircle)
+        progressBar?.progress = percentage
+    }
+//    private fun setupSearchBar() {
+//        val searchText = binding.searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+//        searchText.hint = getString(R.string.search_task)
+//        searchText.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+//        searchText.setTextColor(Color.BLACK)
+//    }
     private fun setupInProgressRecyclerView() {
         taskAdapter = TaskAdapter { task -> onTaskClick(task) }
         binding.recyclerviewInProgress.apply {
@@ -64,9 +73,11 @@ class HomeScreenFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun observeInProgressTasks() {
         viewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
             taskAdapter.submitList(tasks)
+            binding.tvInProgressNumber.text = "${tasks.size}"
         }
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->

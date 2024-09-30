@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> navController.navigate(R.id.homeScreenFragment)
-//                R.id.nav_calendar -> navController.navigate(R.id.nav_calendar)
+                R.id.nav_calendar -> navController.navigate(R.id.calendarFragment)
                 R.id.nav_tasks -> navController.navigate(R.id.viewTaskFragment)
-                R.id.nav_archived -> navController.navigate(R.id.recentlyDeletedTaskFragment)
+                R.id.nav_recentlyDeleted -> navController.navigate(R.id.recentlyDeletedTaskFragment)
             }
             true
         }
