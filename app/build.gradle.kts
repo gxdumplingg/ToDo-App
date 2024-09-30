@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
+    id("kotlin-android")
     id("androidx.navigation.safeargs")
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
@@ -82,5 +83,6 @@ dependencies {
         androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
 
+        implementation ("com.applandeo:material-calendar-view:1.9.2")
     }
 }

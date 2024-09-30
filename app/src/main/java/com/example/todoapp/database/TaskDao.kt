@@ -65,5 +65,9 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE status = 'Done' AND isDeleted = 0")
     fun getDoneTasks(): LiveData<List<Task>>
 
+    @Query("SELECT * FROM task_table WHERE dueDate = :dueDate")
+    fun getTasksByDueDate(dueDate: Date): LiveData<List<Task>>
+
+
 }
 

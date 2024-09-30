@@ -13,14 +13,7 @@ import kotlinx.coroutines.launch
 
 class RecentlyDeletedTaskViewModel(application: Application) : AndroidViewModel(application) {
     private val taskRepository: TaskRepository = TaskRepository(application)
-    private val categoryRepository: CategoryRepository = CategoryRepository(application)
     val recentlyDeletedTasks: LiveData<List<Task>> = taskRepository.getRecentlyDeletedTasks()
-
-    fun deleteTask(task: Task) {
-        viewModelScope.launch {
-            taskRepository.deleteTask(task)
-        }
-    }
 
     fun restoreTask(taskId: Long) {
         viewModelScope.launch {

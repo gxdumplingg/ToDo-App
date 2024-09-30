@@ -24,7 +24,6 @@ import java.util.Date
 import java.util.Locale
 
 class AddTaskFragment : Fragment() {
-
     private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
     private val taskViewModel: AddTaskViewModel by viewModels {
@@ -44,7 +43,6 @@ class AddTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setCategories()
         setupClickListeners()
     }
