@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardviewCategory"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/dark_gray"
-    android:layout_width="250dp"
+    android:layout_width="160dp"
     android:layout_height="130dp"
     android:layout_marginEnd="8dp"
     app:cardBackgroundColor="@color/white"
@@ -18,11 +19,10 @@
             android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:fontFamily="@font/poppins"
             android:text="Category Name"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +33,7 @@
             android:fontFamily="@font/poppins_regular"
             android:text="10 Tasks"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCategoryName" />
 
@@ -45,7 +45,7 @@
             android:max="100"
             android:progress="50"
             android:progressDrawable="@drawable/rectangle_progress_bar"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTaskCount" />

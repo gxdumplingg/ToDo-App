@@ -41,8 +41,6 @@ class HomeScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        setupSearchBar()
         setupCategoryRecyclerView()
         setupAddTaskButton()
         setupViewTaskButton()
@@ -54,6 +52,10 @@ class HomeScreenFragment : Fragment() {
             updateProgressCircle(percentage)
             binding.progressCircle.progress = percentage
             binding.tvPercentage.text = "$percentage%"
+        }
+
+        binding.tvViewAll.setOnClickListener{
+            findNavController().navigate(R.id.action_homeScreenFragment_to_newCategoryFragment)
         }
     }
     private fun updateProgressCircle(percentage: Int) {

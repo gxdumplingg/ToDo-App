@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.model.Category
@@ -35,12 +36,14 @@ class CategoryAdapter(private val categories: List<Category>) : RecyclerView.Ada
         private val categoryName: TextView = itemView.findViewById(R.id.tvCategoryName)
         private val taskCount: TextView = itemView.findViewById(R.id.tvTaskCount)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.rectangleProgressBar)
+        private val cardView: CardView = itemView.findViewById(R.id.cardviewCategory)
 
         @SuppressLint("SetTextI18n")
         fun bind(category: Category) {
             categoryName.text = category.title
             taskCount.text = "${category.completedPercent}%"
             progressBar.progress = category.completedPercent.toInt()
+            cardView.setCardBackgroundColor(category.color)
         }
     }
 }

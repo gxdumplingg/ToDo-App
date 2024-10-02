@@ -18,7 +18,7 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
     val allTasks: LiveData<List<Task>> = taskRepository.getAllActiveTasks()
     val inProgressTasks: LiveData<List<Task>> = taskRepository.getInProgressTasks()
     val doneTasks: LiveData<List<Task>> = taskRepository.getDoneTasks()
-    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.allCategories
 
 
     val completionPercentage: LiveData<Int> = MediatorLiveData<Int>().apply {

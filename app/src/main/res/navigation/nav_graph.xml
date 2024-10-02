@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_detailedTaskFragment"
             app:destination="@id/detailedTaskFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
@@ -80,4 +83,9 @@
             android:id="@+id/action_calendarFragment_to_detailedTaskFragment"
             app:destination="@id/detailedTaskFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/newCategoryFragment"
+        android:name="com.example.todoapp.ui.category.addCategory.NewCategoryFragment"
+        android:label="fragment_new_category"
+        tools:layout="@layout/fragment_new_category" />
 </navigation>
