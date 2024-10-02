@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:headerColor="@color/dark_gray"
-            app:type="many_days_picker"
+            app:type="one_day_picker"
             app:headerLabelColor="@color/white"
             app:selectionColor="@color/yellow"
             app:selectionLabelColor="@color/dark_gray"

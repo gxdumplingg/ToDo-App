@@ -19,7 +19,7 @@ import com.example.todoapp.databinding.FragmentAddTaskBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 import com.example.todoapp.ui.dialog.SuccessDialog
-import com.example.todoapp.viewmodel.CategoryViewModel
+import com.example.todoapp.ui.category.allCategories.CategoryViewModel
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -53,7 +53,7 @@ class AddTaskFragment : Fragment() {
 
     private fun loadCategories() {
         categoryViewModel.allCategories.observe(viewLifecycleOwner) { categoryList ->
-            categories = categoryList // Cập nhật danh sách danh mục
+            categories = categoryList
         }
     }
 

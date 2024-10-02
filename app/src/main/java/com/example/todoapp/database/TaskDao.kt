@@ -30,7 +30,6 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE id = :taskId LIMIT 1")
     fun getTaskById(taskId: Long): LiveData<Task>
 
-
     @Query("SELECT COUNT(*) FROM task_table WHERE status = 'In Progress'")
     fun getInProgressTaskCount(): LiveData<Int>
 
@@ -68,6 +67,10 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE dueDate = :dueDate")
     fun getTasksByDueDate(dueDate: Date): LiveData<List<Task>>
 
+    @Query("SELECT COUNT(*) FROM task_table WHERE categoryId = :categoryId")
+    fun getTaskCountByCategory(categoryId: Long): Int
 
+    @Query("SELECT COUNT(*) FROM task_table WHERE categoryId = :categoryId AND status = 'Done'")
+    fun getCompletedTaskCountByCategory(categoryId: Long): Int
 }
 

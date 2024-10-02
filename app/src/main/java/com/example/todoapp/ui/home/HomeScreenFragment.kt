@@ -1,7 +1,6 @@
 package com.example.todoapp.ui.home
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,7 @@ import com.example.todoapp.adapter.CategoryAdapter
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentHomeScreenBinding
 import com.example.todoapp.model.Task
-import com.example.todoapp.ui.task.viewTask.ViewTaskFragmentDirections
-import com.example.todoapp.viewmodel.CategoryViewModel
+import com.example.todoapp.ui.category.allCategories.CategoryViewModel
 
 class HomeScreenFragment : Fragment() {
 
@@ -55,7 +53,7 @@ class HomeScreenFragment : Fragment() {
         }
 
         binding.tvViewAll.setOnClickListener{
-            findNavController().navigate(R.id.action_homeScreenFragment_to_newCategoryFragment)
+            findNavController().navigate(R.id.action_homeScreenFragment_to_viewAllCategoriesFragment)
         }
     }
     private fun updateProgressCircle(percentage: Int) {

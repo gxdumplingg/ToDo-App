@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentNewCategoryBinding
 import com.example.todoapp.model.Category
-import com.example.todoapp.viewmodel.CategoryViewModel
+import com.example.todoapp.ui.category.allCategories.CategoryViewModel
 
 class NewCategoryFragment : Fragment() {
 
