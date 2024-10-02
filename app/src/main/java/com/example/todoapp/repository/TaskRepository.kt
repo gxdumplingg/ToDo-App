@@ -58,14 +58,11 @@ class TaskRepository(context: Context) {
     fun getAllActiveTasks(): LiveData<List<Task>> {
         return taskDao.getAllActiveTasks()
     }
-    fun getTaskCountByCategory(categoryId: Long): Int {
-        return taskDao.getTaskCountByCategory(categoryId)
+    fun getTotalTaskCountByCategoryId(categoryId: Long): LiveData<Int> {
+        return taskDao.getTotalTaskCountByCategoryId(categoryId)
     }
 
-    fun getCompletionPercentageForCategory(categoryId: Long): Float {
-        val totalTasks = taskDao.getTaskCountByCategory(categoryId)
-        if (totalTasks == 0) return 0f
-        val completedTasks = taskDao.getCompletedTaskCountByCategory(categoryId)
-        return (completedTasks.toFloat() / totalTasks * 100)
+    fun getCompletedTaskCountByCategoryId(categoryId: Long): LiveData<Int> {
+        return taskDao.getCompletedTaskCountByCategoryId(categoryId)
     }
 }

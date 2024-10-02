@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.todoapp.R
 import com.example.todoapp.adapter.CategoryAdapter
 import com.example.todoapp.databinding.FragmentViewAllCategoriesBinding
+import com.example.todoapp.ui.home.HomeScreenViewModel
 
 class ViewAllCategoriesFragment : Fragment() {
 
@@ -21,7 +22,9 @@ class ViewAllCategoriesFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by viewModels() {
         CategoryViewModel.CategoryViewModelFactory(requireActivity().application)
     }
-
+    private val taskViewModel: HomeScreenViewModel by viewModels() {
+        HomeScreenViewModel.HomeScreenViewModelFactory(requireActivity().application)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,14 +37,15 @@ class ViewAllCategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvCategories.layoutManager = GridLayoutManager(context, 2)
-        categoryAdapter = CategoryAdapter(mutableListOf())
+        categoryAdapter = CategoryAdapter(emptyList(), emptyList())
         binding.rvCategories.adapter = categoryAdapter
 
         categoryViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
-            categoryAdapter = CategoryAdapter(categories)
-            binding.rvCategories.adapter = categoryAdapter
+            taskViewModel.allTasks.observe(viewLifecycleOwner) { tasks ->
+                categoryAdapter = CategoryAdapter(categories, tasks)
+                binding.rvCategories.adapter = categoryAdapter
+            }
         }
-
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()

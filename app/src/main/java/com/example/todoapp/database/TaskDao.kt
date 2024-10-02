@@ -68,9 +68,9 @@ interface TaskDao {
     fun getTasksByDueDate(dueDate: Date): LiveData<List<Task>>
 
     @Query("SELECT COUNT(*) FROM task_table WHERE categoryId = :categoryId")
-    fun getTaskCountByCategory(categoryId: Long): Int
+    fun getTotalTaskCountByCategoryId(categoryId: Long): LiveData<Int>
 
     @Query("SELECT COUNT(*) FROM task_table WHERE categoryId = :categoryId AND status = 'Done'")
-    fun getCompletedTaskCountByCategory(categoryId: Long): Int
+    fun getCompletedTaskCountByCategoryId(categoryId: Long): LiveData<Int>
 }
 

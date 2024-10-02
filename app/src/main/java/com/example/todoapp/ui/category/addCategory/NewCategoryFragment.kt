@@ -22,6 +22,7 @@ class NewCategoryFragment : Fragment() {
     }
 
     private var selectedColor: Int = 0
+    private var selectedView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,41 +39,31 @@ class NewCategoryFragment : Fragment() {
     }
 
     private fun setupColorOptions() {
-        val yellowColor = ContextCompat.getColor(requireContext(), R.color.bright_yellow)
-        val redColor = ContextCompat.getColor(requireContext(), R.color.red)
-        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
-        val lightGrayColor = ContextCompat.getColor(requireContext(), R.color.light_gray)
-
-        binding.colorOptionYellow.setOnClickListener {
-            selectedColor = yellowColor
-            updateSelectedColor(yellowColor)
-        }
-
-        binding.colorOptionRed.setOnClickListener {
-            selectedColor = redColor
-            updateSelectedColor(redColor)
-        }
-
-        binding.colorOptionGreen.setOnClickListener {
-            selectedColor = greenColor
-            updateSelectedColor(greenColor)
-        }
-
-        binding.colorOptionLightGray.setOnClickListener {
-            selectedColor = lightGrayColor
-            updateSelectedColor(lightGrayColor)
-        }
+        binding.colorOptionYellow.setOnClickListener { selectColor(binding.colorOptionYellow, R.color.bright_yellow) }
+        binding.colorOptionRed.setOnClickListener { selectColor(binding.colorOptionRed, R.color.red) }
+        binding.colorOptionGreen.setOnClickListener { selectColor(binding.colorOptionGreen, R.color.green) }
+        binding.colorOptionLightGray.setOnClickListener { selectColor(binding.colorOptionLightGray, R.color.light_gray) }
+        binding.colorOptionDarkGray.setOnClickListener { selectColor(binding.colorOptionDarkGray, R.color.dark_gray) }
+        binding.colorOptionDarkBlue.setOnClickListener { selectColor(binding.colorOptionDarkBlue, R.color.dark_blue) }
     }
 
-    private fun updateSelectedColor(color: Int) {
-        selectedColor = color
+    private fun selectColor(view: View, colorRes: Int) {
+        // Reset previously selected view if there was one
+        selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_background)
+
+        // Set the new selected view
+        selectedView = view
+        selectedColor = ContextCompat.getColor(requireContext(), colorRes)
+
+        // Update the background to show selection
+        selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_with_check)
     }
 
     private fun setupAddCategoryListener() {
         binding.btnAddCategory.setOnClickListener {
             val categoryTitle = binding.etSCategoryTitle.text.toString().trim()
 
-            if (categoryTitle.isNotBlank()) {
+            if (categoryTitle.isNotBlank() && selectedColor != 0) {
                 val newCategory = Category(
                     id = 0,
                     title = categoryTitle,
@@ -93,4 +84,3 @@ class NewCategoryFragment : Fragment() {
         _binding = null
     }
 }
-

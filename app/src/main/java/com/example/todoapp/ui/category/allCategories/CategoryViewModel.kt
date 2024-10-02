@@ -24,15 +24,6 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
         categoryRepository.deleteCategory(category)
     }
 
-    fun getTaskCountForCategory(categoryId: Long): Int {
-        return taskRepository.getTaskCountByCategory(categoryId)
-    }
-
-
-    fun getCompletionPercentageForCategory(categoryId: Long): Float {
-        return taskRepository.getCompletionPercentageForCategory(categoryId)
-    }
-
     class CategoryViewModelFactory(private val application: Application) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
