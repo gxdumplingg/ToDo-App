@@ -16,11 +16,9 @@ interface CategoryDao {
     @Delete
     suspend fun deleteCategory(category: Category)
 
-    // Lấy tất cả các category
     @Query("SELECT * FROM category_table ORDER BY category_title ASC")
     fun getAllCategories(): LiveData<List<Category>>
 
-    // Lấy category theo ID
     @Query("SELECT * FROM category_table WHERE id = :categoryId LIMIT 1")
     fun getCategoryById(categoryId: Long): LiveData<Category?>
 

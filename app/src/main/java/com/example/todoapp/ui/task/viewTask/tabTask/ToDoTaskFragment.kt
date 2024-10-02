@@ -47,7 +47,14 @@ class ToDoTaskFragment : Fragment() {
 
     private fun observeTasks() {
         viewModel.toDoTasks.observe(viewLifecycleOwner) { tasks ->
-            taskAdapter.submitList(tasks)
+            if (tasks.isEmpty()) {
+                binding.tvNoTasks.visibility = View.VISIBLE
+                binding.recyclerViewToDoTask.visibility = View.GONE
+            } else {
+                binding.tvNoTasks.visibility = View.GONE
+                binding.recyclerViewToDoTask.visibility = View.VISIBLE
+                taskAdapter.submitList(tasks)
+            }
         }
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->

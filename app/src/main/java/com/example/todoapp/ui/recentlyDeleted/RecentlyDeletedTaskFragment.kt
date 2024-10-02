@@ -16,7 +16,7 @@ class RecentlyDeletedTaskFragment : Fragment() {
 
     private var _binding: FragmentRecentlyDeletedTaskBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: RecentlyDeletedTaskViewModel by viewModels(){
+    private val viewModel: RecentlyDeletedTaskViewModel by viewModels() {
         RecentlyDeletedTaskViewModel.RecentlyDeletedTaskViewModelFactory(requireActivity().application)
     }
 
@@ -30,7 +30,6 @@ class RecentlyDeletedTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val adapter = RecentlyDeletedTaskAdapter { task ->
             showConfirmationDialog(task)
         }
@@ -48,6 +47,10 @@ class RecentlyDeletedTaskFragment : Fragment() {
                 binding.rvRecentlyDeletedTask.visibility = View.VISIBLE
                 adapter.submitList(recentlyDeletedTasks)
             }
+        }
+
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+            adapter.updateCategories(categories)
         }
     }
 

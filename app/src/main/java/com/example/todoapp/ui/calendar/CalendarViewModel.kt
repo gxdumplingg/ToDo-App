@@ -17,7 +17,7 @@ import java.util.Date
 class CalendarViewModel(application: Application) : AndroidViewModel(application) {
     private val taskRepository: TaskRepository = TaskRepository(application)
     private val categoryRepository: CategoryRepository = CategoryRepository(application)
-    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.allCategories
 
     fun getTasksByDueDate(selectedDate: Date): LiveData<List<Task>> {
         return taskRepository.getAllActiveTasks().map { tasks ->

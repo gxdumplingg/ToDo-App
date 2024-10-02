@@ -34,6 +34,11 @@
     <string name="calendar">Calendar</string>
     <string name="no_tasks_displayed">No Tasks Displayed</string>
     <string name="selected_date">Selected Date</string>
+    <string name="new_category">New Category</string>
+    <string name="new_task">New Task</string>
+    <string name="category_title">Category Title</string>
+    <string name="enter_category_title">Enter category title</string>
+    <string name="view_all">View All</string>
 
     <string-array name="category_array">
         <item>Work</item>

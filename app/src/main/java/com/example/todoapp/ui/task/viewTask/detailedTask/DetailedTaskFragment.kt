@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentDetailedTaskBinding
+import com.example.todoapp.model.Category
 import com.example.todoapp.ui.dialog.CustomDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.util.Calendar
@@ -28,11 +30,12 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentDetailedTaskBinding? = null
     private val binding get() = _binding!!
     private val args: DetailedTaskFragmentArgs by navArgs()
-    private var selectedCategoryId: Long = 0L
     private val viewModel: DetailedTaskViewModel by viewModels {
         DetailedTaskViewModel.DetailedTaskViewModelFactory(requireActivity().application)
     }
     private var selectedStatus: String = "To Do"
+    private var categories: List<Category> = emptyList()
+    private var selectedCategoryId: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,16 +45,16 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        dialog?.let { dialog ->
-            val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            bottomSheet?.layoutParams?.height = (resources.displayMetrics.heightPixels * 0.5).toInt()
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.categories.observe(viewLifecycleOwner) { categoriesList ->
+            categories = categoriesList // Lưu danh sách vào biến categories
+
+            // Tìm và hiển thị danh mục của task hiện tại
+            val category = categories.find { it.id == args.categoryId }
+            binding.category.text = category?.title ?: "Unknown Category"
+        }
         viewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
             if (task != null) {
                 binding.title.setText(task.title)
@@ -61,6 +64,7 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
                     binding.category.text = category?.title ?: "Unknown Category"
                 }
                 binding.icCategoryDropdown.setOnClickListener{showCategoryDropdownMenu()}
+                binding.category.setOnClickListener{showCategoryDropdownMenu()}
                 val dueDate = task.dueDate
                 binding.tvDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
                 binding.icDelete.setOnClickListener {
@@ -109,19 +113,18 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
             true
         )
 
-        popupView.apply {
-            findViewById<TextView>(R.id.menu_item_work).setOnClickListener {
-                updateCategory("Work", 1L, popupWindow)
+        val categoryContainer = popupView as LinearLayout
+        categoryContainer.removeAllViews()
+
+        categories.forEach { category ->
+            val categoryView = LayoutInflater.from(requireContext()).inflate(R.layout.menu_category_dropdown, categoryContainer, false)
+            val categoryTitle = categoryView.findViewById<TextView>(R.id.category_title)
+            categoryTitle.text = category.title
+            categoryView.setOnClickListener {
+                updateCategory(category.title, category.id, popupWindow)
             }
-            findViewById<TextView>(R.id.menu_item_education).setOnClickListener {
-                updateCategory("Education", 2L, popupWindow)
-            }
-            findViewById<TextView>(R.id.menu_item_entertainment).setOnClickListener {
-                updateCategory("Entertainment", 3L, popupWindow)
-            }
-            findViewById<TextView>(R.id.menu_item_personal).setOnClickListener {
-                updateCategory("Personal", 4L, popupWindow)
-            }
+
+            categoryContainer.addView(categoryView)
         }
 
         popupWindow.showAsDropDown(binding.icCategoryDropdown)
@@ -155,13 +158,15 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
                 val updatedTask = task.copy(
                     title = binding.title.text.toString(),
                     description = binding.description.text.toString(),
-                    status = selectedStatus
+                    status = selectedStatus,
+                    categoryId = selectedCategoryId
                 )
                 viewModel.updateTask(updatedTask)
                 findNavController().popBackStack()
             }
         }
     }
+
 
     private fun showDatePickerDialog(currentDueDate: Date) {
         val calendar = Calendar.getInstance()

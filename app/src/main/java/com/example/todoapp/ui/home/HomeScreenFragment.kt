@@ -1,7 +1,6 @@
 package com.example.todoapp.ui.home
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,7 @@ import com.example.todoapp.adapter.CategoryAdapter
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentHomeScreenBinding
 import com.example.todoapp.model.Task
-import com.example.todoapp.ui.task.viewTask.ViewTaskFragmentDirections
-import com.example.todoapp.viewmodel.CategoryViewModel
+import com.example.todoapp.ui.category.allCategories.CategoryViewModel
 
 class HomeScreenFragment : Fragment() {
 
@@ -41,8 +39,6 @@ class HomeScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        setupSearchBar()
         setupCategoryRecyclerView()
         setupAddTaskButton()
         setupViewTaskButton()
@@ -55,17 +51,17 @@ class HomeScreenFragment : Fragment() {
             binding.progressCircle.progress = percentage
             binding.tvPercentage.text = "$percentage%"
         }
+
+        binding.tvViewAll.setOnClickListener {
+            findNavController().navigate(R.id.action_homeScreenFragment_to_viewAllCategoriesFragment)
+        }
     }
+
     private fun updateProgressCircle(percentage: Int) {
         val progressBar = view?.findViewById<ProgressBar>(R.id.progressCircle)
         progressBar?.progress = percentage
     }
-//    private fun setupSearchBar() {
-//        val searchText = binding.searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-//        searchText.hint = getString(R.string.search_task)
-//        searchText.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-//        searchText.setTextColor(Color.BLACK)
-//    }
+
     private fun setupInProgressRecyclerView() {
         taskAdapter = TaskAdapter { task -> onTaskClick(task) }
         binding.recyclerviewInProgress.apply {
@@ -73,6 +69,7 @@ class HomeScreenFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
+
     @SuppressLint("SetTextI18n")
     private fun observeInProgressTasks() {
         viewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
@@ -82,6 +79,7 @@ class HomeScreenFragment : Fragment() {
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->
                 taskAdapter.updateTaskCategory(category.id, category.title)
+                binding.tvCategoryNumber.text = "${categories.size}"
             }
         }
     }
@@ -89,29 +87,35 @@ class HomeScreenFragment : Fragment() {
     private fun onTaskClick(task: Task) {
         val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToDetailedTaskFragment(
             task.id,
-            task.categoryId)
+            task.categoryId
+        )
         findNavController().navigate(action)
     }
+
     private fun setupCategoryRecyclerView() {
-        categoryAdapter = CategoryAdapter(emptyList())
+        categoryAdapter = CategoryAdapter(emptyList(), emptyList())
         binding.recyclerviewTaskGroup.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
         }
 
         categoryViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
-            categories?.let {
-                categoryAdapter = CategoryAdapter(it)
+            viewModel.allTasks.observe(viewLifecycleOwner) { tasks ->
+                categoryAdapter = CategoryAdapter(categories, tasks)
                 binding.recyclerviewTaskGroup.adapter = categoryAdapter
             }
+
         }
     }
-    private fun setupViewTaskButton(){
-        binding.btnViewTasks.setOnClickListener{
-            val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToViewTaskFragment()
+
+    private fun setupViewTaskButton() {
+        binding.btnViewTasks.setOnClickListener {
+            val action =
+                HomeScreenFragmentDirections.actionHomeScreenFragmentToViewTaskFragment()
             findNavController().navigate(action)
         }
     }
+
     private fun setupAddTaskButton() {
         binding.btnAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_homeScreenFragment_to_addTaskFragment)

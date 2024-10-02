@@ -50,9 +50,15 @@ class AllTasksFragment : Fragment() {
 
     private fun observeTasks() {
         viewModel.activeTasks.observe(viewLifecycleOwner) { tasks ->
-            taskAdapter.submitList(tasks)
+            if (tasks.isEmpty()) {
+                binding.tvNoTasks.visibility = View.VISIBLE
+                binding.recyclerViewAllTasks.visibility = View.GONE
+            } else {
+                binding.tvNoTasks.visibility = View.GONE
+                binding.recyclerViewAllTasks.visibility = View.VISIBLE
+                taskAdapter.submitList(tasks)
+            }
         }
-
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->
                 taskAdapter.updateTaskCategory(category.id, category.title)

@@ -19,7 +19,7 @@ class ViewTasksViewModel(application: Application) : AndroidViewModel(applicatio
     private val taskDao: TaskDao = ToDoDatabase.getDatabase(application).taskDao()
     private val taskRepository: TaskRepository = TaskRepository(application)
     private val categoryRepository: CategoryRepository = CategoryRepository(application)
-    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.allCategories
 
     val activeTasks: LiveData<List<Task>> = taskDao.getAllActiveTasks()
     val toDoTasks: LiveData<List<Task>> = taskRepository.getToDoTasks()
