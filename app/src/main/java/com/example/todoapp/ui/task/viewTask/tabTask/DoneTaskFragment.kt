@@ -47,7 +47,14 @@ class DoneTaskFragment : Fragment() {
 
     private fun observeTasks() {
         viewModel.doneTasks.observe(viewLifecycleOwner) { tasks ->
-            taskAdapter.submitList(tasks)
+            if (tasks.isEmpty()) {
+                binding.tvNoTasks.visibility = View.VISIBLE
+                binding.recyclerViewDoneTask.visibility = View.GONE
+            } else {
+                binding.tvNoTasks.visibility = View.GONE
+                binding.recyclerViewDoneTask.visibility = View.VISIBLE
+                taskAdapter.submitList(tasks)
+            }
         }
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->

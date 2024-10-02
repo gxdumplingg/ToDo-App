@@ -58,6 +58,11 @@ class TaskRepository(context: Context) {
     fun getAllActiveTasks(): LiveData<List<Task>> {
         return taskDao.getAllActiveTasks()
     }
+    fun getTotalTaskCountByCategoryId(categoryId: Long): LiveData<Int> {
+        return taskDao.getTotalTaskCountByCategoryId(categoryId)
+    }
 
-
+    fun getCompletedTaskCountByCategoryId(categoryId: Long): LiveData<Int> {
+        return taskDao.getCompletedTaskCountByCategoryId(categoryId)
+    }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
@@ -18,7 +19,7 @@ import com.example.todoapp.databinding.FragmentAddTaskBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 import com.example.todoapp.ui.dialog.SuccessDialog
-import com.example.todoapp.viewmodel.CategoryViewModel
+import com.example.todoapp.ui.category.allCategories.CategoryViewModel
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -29,9 +30,12 @@ class AddTaskFragment : Fragment() {
     private val taskViewModel: AddTaskViewModel by viewModels {
         AddTaskViewModel.AddTaskViewModelFactory(requireActivity().application)
     }
-    private val categoryViewModel: CategoryViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels(){
+        CategoryViewModel.CategoryViewModelFactory(requireActivity().application)
+    }
     private var selectedCategoryId: Long = 0L
     private var selectedStatus: String = "To do"
+    private var categories: List<Category> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,22 +47,17 @@ class AddTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setCategories()
+        loadCategories()
         setupClickListeners()
     }
 
-    private fun setCategories() {
-        val categories = listOf(
-            Category(id = 1L, title = "Work", completedPercent = 0f),
-            Category(id = 2L, title = "Education", completedPercent = 0f),
-            Category(id = 3L, title = "Entertainment", completedPercent = 0f),
-            Category(id = 4L, title = "Personal", completedPercent = 0f)
-        )
-
-        categories.forEach { category ->
-            categoryViewModel.addCategory(category)
+    private fun loadCategories() {
+        categoryViewModel.allCategories.observe(viewLifecycleOwner) { categoryList ->
+            categories = categoryList
         }
     }
+
+
 
     private fun setupClickListeners() {
         binding.apply {
@@ -73,7 +72,7 @@ class AddTaskFragment : Fragment() {
             btnAddTask.setOnClickListener { addTaskToDatabase() }
             btnBack.setOnClickListener { findNavController().popBackStack() }
 
-            // Set up status selection
+
             tvTodo.setOnClickListener { selectStatus(tvTodo) }
             tvInProgress.setOnClickListener { selectStatus(tvInProgress) }
             tvDone.setOnClickListener { selectStatus(tvDone) }
@@ -89,23 +88,23 @@ class AddTaskFragment : Fragment() {
             true
         )
 
-        popupView.apply {
-            findViewById<TextView>(R.id.menu_item_work).setOnClickListener {
-                updateCategory("Work", 1L, popupWindow)
+        val categoryContainer = popupView as LinearLayout
+        categoryContainer.removeAllViews()
+
+        categories.forEach { category ->
+            val categoryView = LayoutInflater.from(requireContext()).inflate(R.layout.menu_category_dropdown, categoryContainer, false)
+            val categoryTitle = categoryView.findViewById<TextView>(R.id.category_title)
+            categoryTitle.text = category.title
+            categoryView.setOnClickListener {
+                updateCategory(category.title, category.id, popupWindow)
             }
-            findViewById<TextView>(R.id.menu_item_education).setOnClickListener {
-                updateCategory("Education", 2L, popupWindow)
-            }
-            findViewById<TextView>(R.id.menu_item_entertainment).setOnClickListener {
-                updateCategory("Entertainment", 3L, popupWindow)
-            }
-            findViewById<TextView>(R.id.menu_item_personal).setOnClickListener {
-                updateCategory("Personal", 4L, popupWindow)
-            }
+
+            categoryContainer.addView(categoryView)
         }
 
         popupWindow.showAsDropDown(binding.icCategoryDropdown)
     }
+
 
     private fun updateCategory(categoryName: String, categoryId: Long, popupWindow: PopupWindow) {
         binding.tvSelectedCategory.text = categoryName
@@ -181,7 +180,7 @@ class AddTaskFragment : Fragment() {
                 val selectedDate = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
-                val dateFormat = SimpleDateFormat("MM-dd-yyyy", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 binding.tvSelectedDueDate.text = dateFormat.format(selectedDate.time)
             }, year, month, day)
 

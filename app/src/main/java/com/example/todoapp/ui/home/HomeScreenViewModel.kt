@@ -18,7 +18,7 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
     val allTasks: LiveData<List<Task>> = taskRepository.getAllActiveTasks()
     val inProgressTasks: LiveData<List<Task>> = taskRepository.getInProgressTasks()
     val doneTasks: LiveData<List<Task>> = taskRepository.getDoneTasks()
-    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.allCategories
 
 
     val completionPercentage: LiveData<Int> = MediatorLiveData<Int>().apply {
@@ -35,6 +35,7 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
             value = calculateCompletionPercentage(totalTasks, completedTasks)
         }
     }
+
     private fun calculateCompletionPercentage(allTasks: List<Task>?, doneTasks: List<Task>?): Int {
         return if (!allTasks.isNullOrEmpty()) {
             if (doneTasks.isNullOrEmpty()) {
@@ -46,7 +47,6 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
             0
         }
     }
-
 
     class HomeScreenViewModelFactory(private val application: Application) :
         ViewModelProvider.Factory {

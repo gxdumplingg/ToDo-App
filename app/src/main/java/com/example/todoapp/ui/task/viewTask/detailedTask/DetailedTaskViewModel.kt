@@ -17,7 +17,7 @@ import java.util.Date
 class DetailedTaskViewModel(application: Application) : AndroidViewModel(application) {
     private val taskRepository: TaskRepository = TaskRepository(application)
     private val categoryRepository: CategoryRepository = CategoryRepository(application)
-    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.allCategories
 
     fun getTaskById(taskId: Long): LiveData<Task> {
         return taskRepository.getTaskById(taskId)

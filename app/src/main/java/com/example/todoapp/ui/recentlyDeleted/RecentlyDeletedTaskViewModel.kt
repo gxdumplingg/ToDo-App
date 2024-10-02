@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 import com.example.todoapp.repository.CategoryRepository
 import com.example.todoapp.repository.TaskRepository
@@ -13,8 +14,10 @@ import kotlinx.coroutines.launch
 
 class RecentlyDeletedTaskViewModel(application: Application) : AndroidViewModel(application) {
     private val taskRepository: TaskRepository = TaskRepository(application)
+    private val categoryRepository: CategoryRepository = CategoryRepository(application)
     val recentlyDeletedTasks: LiveData<List<Task>> = taskRepository.getRecentlyDeletedTasks()
 
+    val categories: LiveData<List<Category>> = categoryRepository.allCategories
     fun restoreTask(taskId: Long) {
         viewModelScope.launch {
             taskRepository.restoreTask(taskId)
