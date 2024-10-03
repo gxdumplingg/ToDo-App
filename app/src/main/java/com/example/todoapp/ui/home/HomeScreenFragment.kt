@@ -93,7 +93,11 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setupCategoryRecyclerView() {
-        categoryAdapter = CategoryAdapter(emptyList(), emptyList())
+        categoryAdapter = CategoryAdapter(emptyList(), emptyList()) { categoryId ->
+            val action = HomeScreenFragmentDirections
+                .actionHomeScreenFragmentToDetailedCategoryFragment(categoryId)
+            findNavController().navigate(action)
+        }
         binding.recyclerviewTaskGroup.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter
@@ -101,10 +105,8 @@ class HomeScreenFragment : Fragment() {
 
         categoryViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
             viewModel.allTasks.observe(viewLifecycleOwner) { tasks ->
-                categoryAdapter = CategoryAdapter(categories, tasks)
-                binding.recyclerviewTaskGroup.adapter = categoryAdapter
+                categoryAdapter.updateData(categories, tasks)
             }
-
         }
     }
 

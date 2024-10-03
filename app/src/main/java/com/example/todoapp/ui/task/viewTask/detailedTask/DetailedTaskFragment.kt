@@ -48,39 +48,34 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.categories.observe(viewLifecycleOwner) { categoriesList ->
-            categories = categoriesList // Lưu danh sách vào biến categories
 
-            // Tìm và hiển thị danh mục của task hiện tại
+        viewModel.categories.observe(viewLifecycleOwner) { categoriesList ->
+            categories = categoriesList
             val category = categories.find { it.id == args.categoryId }
             binding.category.text = category?.title ?: "Unknown Category"
         }
+
         viewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
-            if (task != null) {
-                binding.title.setText(task.title)
-                binding.description.setText(task.description)
+            task?.let {
+                binding.title.setText(it.title)
+                binding.description.setText(it.description)
                 viewModel.categories.observe(viewLifecycleOwner) { categories ->
                     val category = categories.find { it.id == args.categoryId }
                     binding.category.text = category?.title ?: "Unknown Category"
                 }
-                binding.icCategoryDropdown.setOnClickListener{showCategoryDropdownMenu()}
-                binding.category.setOnClickListener{showCategoryDropdownMenu()}
+                binding.icCategoryDropdown.setOnClickListener { showCategoryDropdownMenu() }
+                binding.category.setOnClickListener { showCategoryDropdownMenu() }
+
                 val dueDate = task.dueDate
                 binding.tvDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
-                binding.icDelete.setOnClickListener {
-                    showDeleteConfirmationDialog(args.id)
-                }
-
+                binding.icDelete.setOnClickListener { showDeleteConfirmationDialog(args.id) }
                 binding.tvDueDate.setOnClickListener { showDatePickerDialog(dueDate) }
                 binding.icDueDateDropdown.setOnClickListener { showDatePickerDialog(dueDate) }
 
                 binding.tvTimeStart.text = task.timeStart
                 binding.tvTimeEnd.text = task.timeEnd
-
                 binding.tvTimeStart.setOnClickListener { showTimePickerDialog(task.timeStart, true) }
                 binding.icTimeStartDropdown.setOnClickListener { showTimePickerDialog(task.timeStart, true) }
-
-
                 binding.tvTimeEnd.setOnClickListener { showTimePickerDialog(task.timeEnd, false) }
                 binding.icTimeEndDropdown.setOnClickListener { showTimePickerDialog(task.timeEnd, false) }
 
@@ -89,19 +84,11 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
             }
         }
 
-        binding.btnBack.setOnClickListener {
-            showBackDialog()
-        }
-
+        binding.btnBack.setOnClickListener { showBackDialog() }
         binding.tvTodo.setOnClickListener { updateStatus("To Do") }
         binding.tvInProgress.setOnClickListener { updateStatus("In Progress") }
         binding.tvDone.setOnClickListener { updateStatus("Done") }
-
-        binding.btnSave.setOnClickListener {
-            showConfirmationDialog {
-                saveUpdatedTask()
-            }
-        }
+        binding.btnSave.setOnClickListener { showConfirmationDialog { saveUpdatedTask() } }
     }
 
     private fun showCategoryDropdownMenu() {
@@ -117,13 +104,13 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         categoryContainer.removeAllViews()
 
         categories.forEach { category ->
-            val categoryView = LayoutInflater.from(requireContext()).inflate(R.layout.menu_category_dropdown, categoryContainer, false)
+            val categoryView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.menu_category_dropdown, categoryContainer, false)
             val categoryTitle = categoryView.findViewById<TextView>(R.id.category_title)
             categoryTitle.text = category.title
             categoryView.setOnClickListener {
                 updateCategory(category.title, category.id, popupWindow)
             }
-
             categoryContainer.addView(categoryView)
         }
 
@@ -134,6 +121,7 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         selectedCategoryId = categoryId
         popupWindow.dismiss()
     }
+
     private fun updateStatusTextView(status: String) {
         binding.tvTodo.isSelected = status == "To Do"
         binding.tvInProgress.isSelected = status == "In Progress"
@@ -146,7 +134,6 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
         binding.tvInProgress.setTextColor(if (binding.tvInProgress.isSelected) selectedTextColor else defaultTextColor)
         binding.tvDone.setTextColor(if (binding.tvDone.isSelected) selectedTextColor else defaultTextColor)
     }
-
     private fun updateStatus(newStatus: String) {
         selectedStatus = newStatus
         updateStatusTextView(newStatus)
@@ -154,12 +141,13 @@ class DetailedTaskFragment : BottomSheetDialogFragment() {
 
     private fun saveUpdatedTask() {
         viewModel.getTaskById(args.id).observe(viewLifecycleOwner) { task ->
-            if (task != null) {
-                val updatedTask = task.copy(
+            task?.let {
+                val updatedCategoryId = if (selectedCategoryId == 0L) task.categoryId else selectedCategoryId
+                val updatedTask = it.copy(
                     title = binding.title.text.toString(),
                     description = binding.description.text.toString(),
                     status = selectedStatus,
-                    categoryId = selectedCategoryId
+                    categoryId = updatedCategoryId
                 )
                 viewModel.updateTask(updatedTask)
                 findNavController().popBackStack()

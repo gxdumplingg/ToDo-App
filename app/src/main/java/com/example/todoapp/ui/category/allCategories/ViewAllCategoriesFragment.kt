@@ -25,6 +25,7 @@ class ViewAllCategoriesFragment : Fragment() {
     private val taskViewModel: HomeScreenViewModel by viewModels() {
         HomeScreenViewModel.HomeScreenViewModelFactory(requireActivity().application)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,20 +38,25 @@ class ViewAllCategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvCategories.layoutManager = GridLayoutManager(context, 2)
-        categoryAdapter = CategoryAdapter(emptyList(), emptyList())
+
+        categoryAdapter = CategoryAdapter(emptyList(), emptyList()) { categoryId ->
+            val action = ViewAllCategoriesFragmentDirections
+                .actionViewAllCategoriesFragmentToDetailedCategoryFragment(categoryId)
+            findNavController().navigate(action)
+        }
         binding.rvCategories.adapter = categoryAdapter
 
         categoryViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
             taskViewModel.allTasks.observe(viewLifecycleOwner) { tasks ->
-                categoryAdapter = CategoryAdapter(categories, tasks)
-                binding.rvCategories.adapter = categoryAdapter
+                categoryAdapter.updateData(categories, tasks)
             }
         }
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.btnAddCategory.setOnClickListener{
+
+        binding.btnAddCategory.setOnClickListener {
             findNavController().navigate(R.id.action_viewAllCategoriesFragment_to_newCategoryFragment)
         }
     }

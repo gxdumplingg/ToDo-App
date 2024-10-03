@@ -61,7 +61,7 @@ class AddTaskFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.apply {
-            icCategoryDropdown.setOnClickListener { showCategoryDropdownMenu() }
+            icAddNewCategory.setOnClickListener { findNavController().navigate(R.id.action_addTaskFragment_to_newCategoryFragment) }
             tvSelectedCategory.setOnClickListener{ showCategoryDropdownMenu() }
             icDueDateDropdown.setOnClickListener { showDatePickerDialog() }
             tvSelectedDueDate.setOnClickListener { showDatePickerDialog() }
@@ -102,7 +102,7 @@ class AddTaskFragment : Fragment() {
             categoryContainer.addView(categoryView)
         }
 
-        popupWindow.showAsDropDown(binding.icCategoryDropdown)
+        popupWindow.showAsDropDown(binding.tvSelectedCategory)
     }
 
 
