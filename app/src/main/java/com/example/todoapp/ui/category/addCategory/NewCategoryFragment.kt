@@ -12,6 +12,7 @@ import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentNewCategoryBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.ui.category.allCategories.CategoryViewModel
+import com.example.todoapp.ui.dialog.CustomDialog
 
 class NewCategoryFragment : Fragment() {
 
@@ -36,7 +37,7 @@ class NewCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupColorOptions()
         setupAddCategoryListener()
-        binding.btnBack.setOnClickListener{findNavController().popBackStack()}
+        binding.btnBack.setOnClickListener { showBackDialog() }
     }
 
     private fun setupColorOptions() {
@@ -78,7 +79,15 @@ class NewCategoryFragment : Fragment() {
             }
         }
     }
-
+    private fun showBackDialog(){
+        val customDialog = CustomDialog(requireContext()).apply {
+            message = "Changes you made may not be saved. \nDo you want to leave?"
+            onConfirmClickListener = {
+                findNavController().popBackStack()
+            }
+        }
+        customDialog.show()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

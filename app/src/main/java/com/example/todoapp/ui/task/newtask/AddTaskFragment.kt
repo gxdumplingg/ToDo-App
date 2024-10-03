@@ -180,7 +180,7 @@ class AddTaskFragment : Fragment() {
                 val selectedDate = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
                 }
-                val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 binding.tvSelectedDueDate.text = dateFormat.format(selectedDate.time)
             }, year, month, day)
 

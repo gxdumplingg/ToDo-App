@@ -1,6 +1,6 @@
 package com.example.todoapp.ui.category.detailedCategory
 
-import android.annotation.SuppressLint
+import  android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
