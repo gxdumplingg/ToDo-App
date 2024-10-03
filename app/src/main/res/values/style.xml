@@ -38,31 +38,15 @@
         <item name="android:background">@drawable/selected_task_background</item>
     </style>
 
-    <style name="CustomContentHintStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColorHint">#8A8A8A</item>
-    </style>
-
-    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
-        <item name="android:textColor">#000000</item>
-        <item name="android:textColorHint">#000000</item>
-        <item name="android:icon">@drawable/ic_search</item>
-    </style>
-
-    <style name="CustomBottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
-    </style>
-
-    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:layout_marginTop">16dp</item>
-    </style>
-
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/rounded_dropdown</item>
+        <item name="android:padding">8dp</item>
     </style>
 
 </resources>

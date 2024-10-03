@@ -11,12 +11,7 @@ class TaskRepository(context: Context) {
     private val taskDao: TaskDao = ToDoDatabase.getDatabase(context).taskDao()
     suspend fun insertTask(task: Task) = taskDao.insertTask(task)
     suspend fun updateTask(task: Task) = taskDao.updateTask(task)
-    suspend fun deleteTask(task: Task) = taskDao.deleteTask(task)
 
-    val allTasks: LiveData<List<Task>> = taskDao.getAllTasks()
-    fun getTasksByStatus(status: String): LiveData<List<Task>> {
-        return taskDao.getTasksByStatus(status)
-    }
     fun getTaskById(id: Long): LiveData<Task> {
         return taskDao.getTaskById(id)
     }
@@ -58,11 +53,5 @@ class TaskRepository(context: Context) {
     fun getAllActiveTasks(): LiveData<List<Task>> {
         return taskDao.getAllActiveTasks()
     }
-    fun getTotalTaskCountByCategoryId(categoryId: Long): LiveData<Int> {
-        return taskDao.getTotalTaskCountByCategoryId(categoryId)
-    }
 
-    fun getCompletedTaskCountByCategoryId(categoryId: Long): LiveData<Int> {
-        return taskDao.getCompletedTaskCountByCategoryId(categoryId)
-    }
 }

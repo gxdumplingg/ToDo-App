@@ -107,10 +107,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/bright_yellow"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:backgroundTint="@color/bright_yellow" />
 
                 <View
                     android:id="@+id/colorOptionRed"
@@ -120,10 +117,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/red"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:backgroundTint="@color/red" />
 
                 <View
                     android:id="@+id/colorOptionGreen"
@@ -133,10 +127,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/green"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:backgroundTint="@color/green" />
 
                 <View
                     android:id="@+id/colorOptionLightGray"
@@ -146,10 +137,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/light_gray"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:backgroundTint="@color/light_gray" />
 
                 <View
                     android:id="@+id/colorOptionDarkGray"
@@ -159,10 +147,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/dark_gray"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:backgroundTint="@color/dark_gray" />
 
                 <View
                     android:id="@+id/colorOptionDarkBlue"
@@ -172,10 +157,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/dark_blue"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
+                    android:backgroundTint="@color/dark_blue" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

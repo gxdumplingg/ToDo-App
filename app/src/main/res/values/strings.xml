@@ -40,6 +40,9 @@
     <string name="enter_category_title">Enter category title</string>
     <string name="view_all">View All</string>
     <string name="detailed_category">Detailed Category</string>
+    <string name="total">Total:</string>
+    <string name="sort_by_due_date_ascending">Sort by Due Date ASC</string>
+    <string name="sort_by_due_date_descending">Sort by Due Date DESC</string>
 
     <string-array name="category_array">
         <item>Work</item>

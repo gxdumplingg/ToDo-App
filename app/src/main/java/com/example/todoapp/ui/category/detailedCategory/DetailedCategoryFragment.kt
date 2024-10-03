@@ -1,6 +1,6 @@
 package com.example.todoapp.ui.category.detailedCategory
 
-import android.annotation.SuppressLint
+import  android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -63,7 +63,7 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
             }
         }
 //        binding.tvCategoryTitle.setOnClickListener { showCategoryDropdownMenu() }
-        binding.btnSaveNewCategory.setOnClickListener { showConfirmationDialog { saveUpdatedCategory() } }
+        binding.btnSaveNewCategory.setOnClickListener { showSaveDialog() }
         binding.icAddNewCategory.setOnClickListener{ findNavController().navigate(R.id.action_detailedCategoryFragment_to_newCategoryFragment)}
         setupColorOptions()
     }
@@ -131,31 +131,21 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
     }
 
     private fun showDeleteConfirmationDialog(category: Category) {
-        val dialogView = layoutInflater.inflate(R.layout.confirmation_dialog, null)
+        val dialogView = layoutInflater.inflate(R.layout.delete_dialog, null)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
-        dialogView.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
-            dialog.dismiss()
-        }
-        dialogView.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
+
+        val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirm)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+
+        btnConfirm.setOnClickListener {
             viewModel.deleteCategory(category)
             dialog.dismiss()
             findNavController().popBackStack()
         }
-        dialog.show()
-    }
 
-    private fun showConfirmationDialog(onConfirm: () -> Unit) {
-        val dialogView = layoutInflater.inflate(R.layout.confirmation_dialog, null)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
-        dialogView.findViewById<Button>(R.id.btn_cancel).setOnClickListener {
-            dialog.dismiss()
-        }
-        dialogView.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-            onConfirm()
+        btnCancel.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
@@ -166,6 +156,16 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
             message = "Changes you made may not be saved. Do you want to leave?"
             onConfirmClickListener = {
                 findNavController().popBackStack()
+            }
+        }
+        customDialog.show()
+    }
+
+    private fun showSaveDialog() {
+        val customDialog = CustomDialog(requireContext()).apply {
+            message = "Are you sure you want to update new category?"
+            onConfirmClickListener = {
+                saveUpdatedCategory()
             }
         }
         customDialog.show()
