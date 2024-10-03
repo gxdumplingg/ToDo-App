@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_dropdown"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/sort_due_date_ascending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="@color/dark_gray"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="14sp"
+        android:text="@string/sort_by_due_date_ascending" />
+
+    <TextView
+        android:id="@+id/sort_due_date_descending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textColor="@color/dark_gray"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="14sp"
+        android:text="@string/sort_by_due_date_descending" />
+
+</LinearLayout>

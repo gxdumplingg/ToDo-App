@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardviewCategory"
-    android:layout_width="170dp"
+    android:layout_width="150dp"
     android:layout_height="150dp"
     android:layout_margin="8dp"
     app:cardBackgroundColor="@color/dark_gray"
@@ -12,15 +12,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageButton
-            android:id="@+id/icDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_detail"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@android:color/transparent"/>
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
         <TextView
             android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
@@ -28,8 +22,7 @@
             android:fontFamily="@font/poppins"
             android:text="Category Name"
             android:textColor="@color/white"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_margin="8dp"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +33,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:text="10 Tasks"
-            android:layout_marginStart="10dp"
+            android:layout_margin="8dp"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCategoryName" />
 

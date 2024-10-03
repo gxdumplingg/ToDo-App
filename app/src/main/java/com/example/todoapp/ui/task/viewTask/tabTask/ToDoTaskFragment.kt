@@ -1,13 +1,17 @@
 package com.example.todoapp.ui.task.viewTask.tabTask
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todoapp.R
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentToDoTaskBinding
 import com.example.todoapp.model.Task
@@ -32,7 +36,7 @@ class ToDoTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.icFilter.setOnClickListener { showSortMenu() }
         setupRecyclerView()
         observeTasks()
     }
@@ -45,8 +49,10 @@ class ToDoTaskFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeTasks() {
         viewModel.toDoTasks.observe(viewLifecycleOwner) { tasks ->
+            binding.tvToDoTasksNumber.text = "Total: ${tasks.size}"
             if (tasks.isEmpty()) {
                 binding.tvNoTasks.visibility = View.VISIBLE
                 binding.recyclerViewToDoTask.visibility = View.GONE
@@ -69,6 +75,29 @@ class ToDoTaskFragment : Fragment() {
             task.categoryId
         )
         findNavController().navigate(action)
+    }
+
+    private fun showSortMenu() {
+        val popupView = layoutInflater.inflate(R.layout.menu_popup_filter, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupView.findViewById<TextView>(R.id.sort_due_date_ascending).setOnClickListener {
+            viewModel.sortToDoTasksByDueDateAscending()
+            popupWindow.dismiss()
+        }
+
+        popupView.findViewById<TextView>(R.id.sort_due_date_descending).setOnClickListener {
+            viewModel.sortToDoTasksByDueDateDescending()
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAsDropDown(binding.icFilter, 0, 0)
     }
 
     override fun onDestroyView() {

@@ -33,22 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHello" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/search_bar_background"
-        android:textAppearance="@style/CustomSearchView"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUsername"
-        app:layout_constraintVertical_bias="0.0"
-        app:queryBackground="@null"
-        android:visibility="gone"
-        app:queryHint="@string/search_task" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/todayTaskWidget"
@@ -60,7 +45,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchBar">
+        app:layout_constraintTop_toBottomOf="@id/tvUsername">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -169,10 +154,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerviewTaskGroup"
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="160dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-
+        android:layout_marginEnd="8dp"
         android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

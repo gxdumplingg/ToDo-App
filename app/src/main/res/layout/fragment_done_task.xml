@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".ui.task.viewTask.tabTask.DoneTaskFragment">
 
+    <ImageButton
+        android:id="@+id/icFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/ic_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDoneTasksNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/total"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDoneTask"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_task"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icFilter"
+        tools:listitem="@layout/item_task" />
+
     <TextView
         android:id="@+id/tvNoTasks"
         android:layout_width="wrap_content"

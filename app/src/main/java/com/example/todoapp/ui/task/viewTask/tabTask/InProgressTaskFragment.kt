@@ -1,13 +1,17 @@
 package com.example.todoapp.ui.task.viewTask.tabTask
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todoapp.R
 import com.example.todoapp.adapter.TaskAdapter
 import com.example.todoapp.databinding.FragmentInProgressTaskBinding
 import com.example.todoapp.model.Task
@@ -32,27 +36,29 @@ class InProgressTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.icFilter.setOnClickListener{showSortMenu()}
         setupRecyclerView()
         observeTasks()
     }
 
     private fun setupRecyclerView() {
         taskAdapter = TaskAdapter { task -> onTaskClick(task) }
-        binding.recyclerViewInprogressTask.apply {
+        binding.recyclerViewInProgressTask.apply {
             adapter = taskAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeTasks() {
         viewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
+            binding.tvInProgressTasksNumber.text = "Total: ${tasks.size}"
             if (tasks.isEmpty()) {
                 binding.tvNoTasks.visibility = View.VISIBLE
-                binding.recyclerViewInprogressTask.visibility = View.GONE
+                binding.recyclerViewInProgressTask.visibility = View.GONE
             } else {
                 binding.tvNoTasks.visibility = View.GONE
-                binding.recyclerViewInprogressTask.visibility = View.VISIBLE
+                binding.recyclerViewInProgressTask.visibility = View.VISIBLE
                 taskAdapter.submitList(tasks)
             }
         }
@@ -63,6 +69,28 @@ class InProgressTaskFragment : Fragment() {
         }
     }
 
+    private fun showSortMenu() {
+        val popupView = layoutInflater.inflate(R.layout.menu_popup_filter, null)
+
+        val popupWindow = PopupWindow(
+            popupView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        popupView.findViewById<TextView>(R.id.sort_due_date_ascending).setOnClickListener {
+            viewModel.sortInProgressTasksByDueDateAscending()
+            popupWindow.dismiss()
+        }
+
+        popupView.findViewById<TextView>(R.id.sort_due_date_descending).setOnClickListener {
+            viewModel.sortInProgressTasksByDueDateDescending()
+            popupWindow.dismiss()
+        }
+
+        popupWindow.showAsDropDown(binding.icFilter, 0, 0)
+    }
     private fun onTaskClick(task: Task) {
         val action = ViewTaskFragmentDirections.actionViewTaskFragmentToDetailedTaskFragment(
             task.id,

@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import com.example.todoapp.database.CategoryDao
 import com.example.todoapp.database.ToDoDatabase
 import com.example.todoapp.model.Category
-import com.example.todoapp.model.CategoryWithTaskCount
 import com.example.todoapp.model.Task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
