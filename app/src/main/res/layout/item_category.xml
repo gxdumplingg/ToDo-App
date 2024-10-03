@@ -12,9 +12,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
-
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/icDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_detail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@android:color/transparent"/>
         <TextView
             android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
@@ -22,6 +28,8 @@
             android:fontFamily="@font/poppins"
             android:text="Category Name"
             android:textColor="@color/white"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="10dp"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +40,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:text="10 Tasks"
+            android:layout_marginStart="10dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +53,7 @@
             android:layout_height="0dp"
             android:max="100"
             android:progress="50"
+            android:layout_margin="10dp"
             android:progressDrawable="@drawable/rectangle_progress_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

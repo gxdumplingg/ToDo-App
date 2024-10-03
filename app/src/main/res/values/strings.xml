@@ -39,6 +39,7 @@
     <string name="category_title">Category Title</string>
     <string name="enter_category_title">Enter category title</string>
     <string name="view_all">View All</string>
+    <string name="detailed_category">Detailed Category</string>
 
     <string-array name="category_array">
         <item>Work</item>

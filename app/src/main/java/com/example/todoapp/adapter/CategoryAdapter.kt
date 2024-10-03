@@ -13,13 +13,15 @@ import com.example.todoapp.model.Category
 import com.example.todoapp.model.Task
 
 class CategoryAdapter(
-    private val categories: List<Category>, private val tasks: List<Task>
+    private var categories: List<Category>,
+    private var tasks: List<Task>,
+    private val onCategoryClick: (Long) -> Unit // Pass category ID on click
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
-        return CategoryViewHolder(view)
+        return CategoryViewHolder(view, onCategoryClick)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
@@ -35,14 +37,23 @@ class CategoryAdapter(
         return categories.size
     }
 
-    class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun updateData(newCategories: List<Category>, newTasks: List<Task>) {
+        categories = newCategories
+        tasks = newTasks
+        notifyDataSetChanged()
+    }
+
+    class CategoryViewHolder(
+        itemView: View,
+        private val onCategoryClick: (Long) -> Unit
+    ) : RecyclerView.ViewHolder(itemView) {
         private val categoryName: TextView = itemView.findViewById(R.id.tvCategoryName)
         private val tvTaskCount: TextView = itemView.findViewById(R.id.tvTaskCount)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.rectangleProgressBar)
         private val cardView: CardView = itemView.findViewById(R.id.cardviewCategory)
 
         @SuppressLint("SetTextI18n")
-        fun bind(category: Category, taskCount: Int, completedCount: Int){
+        fun bind(category: Category, taskCount: Int, completedCount: Int) {
             categoryName.text = category.title
             tvTaskCount.text = "$taskCount Tasks"
 
@@ -53,6 +64,10 @@ class CategoryAdapter(
             }
             progressBar.progress = completedPercent
             cardView.setCardBackgroundColor(category.color)
+
+            itemView.setOnClickListener {
+                onCategoryClick(category.id)
+            }
         }
     }
 }

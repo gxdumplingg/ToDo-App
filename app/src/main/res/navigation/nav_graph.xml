@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_viewAllCategoriesFragment"
             app:destination="@id/viewAllCategoriesFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_detailedCategoryFragment"
+            app:destination="@id/detailedCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
@@ -43,6 +46,9 @@
         <argument
             android:name="taskId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_addTaskFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewTaskFragment"
@@ -78,7 +84,7 @@
         android:id="@+id/calendarFragment"
         android:name="com.example.todoapp.ui.calendar.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" >
+        tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_detailedTaskFragment"
             app:destination="@id/detailedTaskFragment" />
@@ -92,9 +98,25 @@
         android:id="@+id/viewAllCategoriesFragment"
         android:name="com.example.todoapp.ui.category.allCategories.ViewAllCategoriesFragment"
         android:label="fragment_view_all_categories"
-        tools:layout="@layout/fragment_view_all_categories" >
+        tools:layout="@layout/fragment_view_all_categories"
+        app:argType="long">
         <action
             android:id="@+id/action_viewAllCategoriesFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
+        <action
+            android:id="@+id/action_viewAllCategoriesFragment_to_detailedCategoryFragment"
+            app:destination="@id/detailedCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedCategoryFragment"
+        android:name="com.example.todoapp.ui.category.detailedCategory.DetailedCategoryFragment"
+        android:label="fragment_detailed_category"
+        tools:layout="@layout/fragment_detailed_category">
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_detailedCategoryFragment_to_newCategoryFragment"
             app:destination="@id/newCategoryFragment" />
     </fragment>
 </navigation>
