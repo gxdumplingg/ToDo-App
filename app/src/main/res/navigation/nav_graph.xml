@@ -43,6 +43,9 @@
         <argument
             android:name="taskId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_addTaskFragment_to_newCategoryFragment"
+            app:destination="@id/newCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewTaskFragment"
