@@ -1,5 +1,6 @@
 package com.example.todoapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -17,7 +18,7 @@ class RecentlyDeletedTaskAdapter(
     TaskDiffCallback()
 ) {
 
-    private var categories: List<Category> = emptyList() // Danh sách category
+    private var categories: List<Category> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -33,12 +34,13 @@ class RecentlyDeletedTaskAdapter(
 
     override fun onBindViewHolder(holder: RecentlyDeletedTaskAdapterViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, onRestoreClick, categories) // Truyền danh sách categories vào bind
+        holder.bind(task, onRestoreClick, categories)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateCategories(newCategories: List<Category>) {
-        categories = newCategories // Cập nhật danh sách categories
-        notifyDataSetChanged() // Cập nhật lại RecyclerView
+        categories = newCategories
+        notifyDataSetChanged()
     }
 
     class RecentlyDeletedTaskAdapterViewHolder(private val binding: ItemRecentlyDeletedTaskBinding) :

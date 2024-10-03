@@ -36,26 +36,26 @@ class NewCategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupColorOptions()
         setupAddCategoryListener()
+        binding.btnBack.setOnClickListener{findNavController().popBackStack()}
     }
 
     private fun setupColorOptions() {
-        binding.colorOptionYellow.setOnClickListener { selectColor(binding.colorOptionYellow, R.color.bright_yellow) }
-        binding.colorOptionRed.setOnClickListener { selectColor(binding.colorOptionRed, R.color.red) }
-        binding.colorOptionGreen.setOnClickListener { selectColor(binding.colorOptionGreen, R.color.green) }
-        binding.colorOptionLightGray.setOnClickListener { selectColor(binding.colorOptionLightGray, R.color.light_gray) }
-        binding.colorOptionDarkGray.setOnClickListener { selectColor(binding.colorOptionDarkGray, R.color.dark_gray) }
-        binding.colorOptionDarkBlue.setOnClickListener { selectColor(binding.colorOptionDarkBlue, R.color.dark_blue) }
+        binding.apply {
+            colorOptionYellow.setOnClickListener { selectColor(binding.colorOptionYellow, R.color.bright_yellow) }
+            colorOptionRed.setOnClickListener { selectColor(binding.colorOptionRed, R.color.red) }
+            colorOptionGreen.setOnClickListener { selectColor(binding.colorOptionGreen, R.color.green) }
+            colorOptionLightGray.setOnClickListener { selectColor(binding.colorOptionLightGray, R.color.light_gray) }
+            colorOptionDarkGray.setOnClickListener { selectColor(binding.colorOptionDarkGray, R.color.dark_gray) }
+            colorOptionDarkBlue.setOnClickListener { selectColor(binding.colorOptionDarkBlue, R.color.dark_blue) }
+        }
     }
 
     private fun selectColor(view: View, colorRes: Int) {
-        // Reset previously selected view if there was one
         selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_background)
 
-        // Set the new selected view
         selectedView = view
         selectedColor = ContextCompat.getColor(requireContext(), colorRes)
 
-        // Update the background to show selection
         selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_with_check)
     }
 
