@@ -1,9 +1,11 @@
 package com.example.todoapp.ui.category.addCategory
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,16 +55,18 @@ class NewCategoryFragment : Fragment() {
 
     private fun selectColor(view: View, colorRes: Int) {
         selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_background)
-
         selectedView = view
         selectedColor = ContextCompat.getColor(requireContext(), colorRes)
-
         selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_with_check)
     }
 
     private fun setupAddCategoryListener() {
         binding.btnAddCategory.setOnClickListener {
             val categoryTitle = binding.etSCategoryTitle.text.toString().trim()
+
+
+            Log.d("NewCategoryFragment", "Category Title: $categoryTitle")
+            Log.d("NewCategoryFragment", "Selected Color: $selectedColor")
 
             if (categoryTitle.isNotBlank() && selectedColor != 0) {
                 val newCategory = Category(
@@ -75,7 +79,12 @@ class NewCategoryFragment : Fragment() {
                 categoryViewModel.addCategory(newCategory)
                 findNavController().popBackStack()
             } else {
-                binding.etSCategoryTitle.error = "Please enter category title."
+                if (categoryTitle.isBlank()) {
+                    binding.etSCategoryTitle.error = "Please enter category title."
+                }
+                if (selectedColor == 0) {
+                    Toast.makeText(requireContext(), "Please select a color.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
