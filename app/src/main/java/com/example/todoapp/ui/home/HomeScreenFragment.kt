@@ -73,8 +73,15 @@ class HomeScreenFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun observeInProgressTasks() {
         viewModel.inProgressTasks.observe(viewLifecycleOwner) { tasks ->
-            taskAdapter.submitList(tasks)
             binding.tvInProgressNumber.text = "${tasks.size}"
+            if (tasks.isEmpty()) {
+                binding.tvNoTasks.visibility = View.VISIBLE
+                binding.recyclerviewInProgress.visibility = View.GONE
+            } else {
+                binding.tvNoTasks.visibility = View.GONE
+                binding.recyclerviewInProgress.visibility = View.VISIBLE
+                taskAdapter.submitList(tasks)
+            }
         }
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->
@@ -96,12 +103,12 @@ class HomeScreenFragment : Fragment() {
         categoryAdapter = CategoryAdapter(emptyList(), emptyList(),
             onCategoryClick = { categoryId ->
                 val action = HomeScreenFragmentDirections
-                    .actionHomeScreenFragmentToDetailedCategoryFragment(categoryId)
+                    .actionHomeScreenFragmentToCategoryWithTaskListFragment(categoryId)
                 findNavController().navigate(action)
             },
             onMoreClick = { categoryId ->
                 val action =
-                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCategoryWithTaskListFragment(
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToDetailedCategoryFragment(
                         categoryId
                     )
                 findNavController().navigate(action)

@@ -42,12 +42,12 @@ class ViewAllCategoriesFragment : Fragment() {
         categoryAdapter = CategoryAdapter(emptyList(), emptyList(),
             onCategoryClick = { categoryId ->
                 val action = ViewAllCategoriesFragmentDirections
-                    .actionViewAllCategoriesFragmentToDetailedCategoryFragment(categoryId)
+                    .actionViewAllCategoriesFragmentToCategoryWithTaskListFragment(categoryId)
                 findNavController().navigate(action)
             },
             onMoreClick = { categoryId ->
                 val action = ViewAllCategoriesFragmentDirections
-                    .actionViewAllCategoriesFragmentToCategoryWithTaskListFragment(categoryId)
+                    .actionViewAllCategoriesFragmentToDetailedCategoryFragment(categoryId)
                 findNavController().navigate(action)
             }
         )
