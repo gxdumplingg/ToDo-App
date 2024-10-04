@@ -39,11 +39,18 @@ class ViewAllCategoriesFragment : Fragment() {
 
         binding.rvCategories.layoutManager = GridLayoutManager(context, 2)
 
-        categoryAdapter = CategoryAdapter(emptyList(), emptyList()) { categoryId ->
-            val action = ViewAllCategoriesFragmentDirections
-                .actionViewAllCategoriesFragmentToDetailedCategoryFragment(categoryId)
-            findNavController().navigate(action)
-        }
+        categoryAdapter = CategoryAdapter(emptyList(), emptyList(),
+            onCategoryClick = { categoryId ->
+                val action = ViewAllCategoriesFragmentDirections
+                    .actionViewAllCategoriesFragmentToCategoryWithTaskListFragment(categoryId)
+                findNavController().navigate(action)
+            },
+            onMoreClick = { categoryId ->
+                val action = ViewAllCategoriesFragmentDirections
+                    .actionViewAllCategoriesFragmentToDetailedCategoryFragment(categoryId)
+                findNavController().navigate(action)
+            }
+        )
         binding.rvCategories.adapter = categoryAdapter
 
         categoryViewModel.allCategories.observe(viewLifecycleOwner) { categories ->

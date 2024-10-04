@@ -43,6 +43,8 @@
     <string name="total">Total:</string>
     <string name="sort_by_due_date_ascending">Sort by Due Date ASC</string>
     <string name="sort_by_due_date_descending">Sort by Due Date DESC</string>
+    <string name="delete_confirmation">Delete Confirmation</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
 
     <string-array name="category_array">
         <item>Work</item>
