@@ -108,76 +108,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCategoryTitle" />
 
-            <LinearLayout
-                android:id="@+id/llColorOptions"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvColorOptions"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
+                android:orientation="horizontal"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvColorLabel">
-
-                <View
-                    android:id="@+id/colorOptionYellow"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/bright_yellow" />
-
-                <View
-                    android:id="@+id/colorOptionRed"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/red" />
-
-                <View
-                    android:id="@+id/colorOptionGreen"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/green" />
-
-                <View
-                    android:id="@+id/colorOptionLightGray"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/light_gray" />
-
-                <View
-                    android:id="@+id/colorOptionDarkGray"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/dark_gray" />
-
-                <View
-                    android:id="@+id/colorOptionDarkBlue"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/circle_selector"
-                    android:backgroundTint="@color/dark_blue" />
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/tvColorLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

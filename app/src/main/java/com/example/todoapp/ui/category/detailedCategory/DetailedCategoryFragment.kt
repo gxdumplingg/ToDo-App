@@ -3,6 +3,7 @@ package com.example.todoapp.ui.category.detailedCategory
 import  android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,13 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
+import com.example.todoapp.adapter.ColorAdapter
 import com.example.todoapp.databinding.FragmentDetailedCategoryBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.ui.dialog.CustomDialog
@@ -28,7 +32,6 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
         DetailedCategoryViewModel.DetailedCategoryViewModelFactory(requireActivity().application)
     }
     private var selectedColor: Int = 0
-    private var selectedView: View? = null
     private var selectedCategoryId: Long? = null
     private var categories: List<Category> = emptyList()
 
@@ -71,19 +74,12 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
     private fun bindCategoryData(category: Category) {
         binding.tvCategoryTitle.text = category.title
         selectedColor = category.color
-
         updateSelectedColorView(selectedColor)
     }
 
     private fun updateSelectedColorView(color: Int) {
-        when (color) {
-            ContextCompat.getColor(requireContext(), R.color.bright_yellow) -> selectColor(binding.colorOptionYellow, R.color.bright_yellow)
-            ContextCompat.getColor(requireContext(), R.color.red) -> selectColor(binding.colorOptionRed, R.color.red)
-            ContextCompat.getColor(requireContext(), R.color.green) -> selectColor(binding.colorOptionGreen, R.color.green)
-            ContextCompat.getColor(requireContext(), R.color.light_gray) -> selectColor(binding.colorOptionLightGray, R.color.light_gray)
-            ContextCompat.getColor(requireContext(), R.color.dark_gray) -> selectColor(binding.colorOptionDarkGray, R.color.dark_gray)
-            ContextCompat.getColor(requireContext(), R.color.dark_blue) -> selectColor(binding.colorOptionDarkBlue, R.color.dark_blue)
-        }
+        selectedColor = color
+
     }
 
     private fun saveUpdatedCategory() {
@@ -172,22 +168,26 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupColorOptions() {
-        binding.colorOptionYellow.setOnClickListener { selectColor(binding.colorOptionYellow, R.color.bright_yellow) }
-        binding.colorOptionRed.setOnClickListener { selectColor(binding.colorOptionRed, R.color.red) }
-        binding.colorOptionGreen.setOnClickListener { selectColor(binding.colorOptionGreen, R.color.green) }
-        binding.colorOptionLightGray.setOnClickListener { selectColor(binding.colorOptionLightGray, R.color.light_gray) }
-        binding.colorOptionDarkGray.setOnClickListener { selectColor(binding.colorOptionDarkGray, R.color.dark_gray) }
-        binding.colorOptionDarkBlue.setOnClickListener { selectColor(binding.colorOptionDarkBlue, R.color.dark_blue) }
+        val colors = listOf(
+            R.color.bright_yellow,
+            R.color.red,
+            R.color.green,
+            R.color.light_gray,
+            R.color.dark_gray,
+            R.color.dark_blue,
+            R.color.brown,
+            R.color.dark_brown,
+            R.color.olive_green,
+        )
+        val adapter = ColorAdapter(requireContext(), colors) { selectedColorResId ->
+            val selectedColor = ContextCompat.getColor(requireContext(), selectedColorResId)
+            this.selectedColor = selectedColor
+            updateSelectedColorView(selectedColor)
+        }
+        binding.rvColorOptions.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvColorOptions.adapter = adapter
     }
 
-    private fun selectColor(view: View, colorRes: Int) {
-        selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_background)
-
-        selectedView = view
-        selectedColor = ContextCompat.getColor(requireContext(), colorRes)
-
-        selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_with_check)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

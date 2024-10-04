@@ -10,6 +10,7 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
 import com.example.todoapp.adapter.TaskAdapter
@@ -25,7 +26,7 @@ class InProgressTaskFragment : Fragment() {
     private val viewModel: ViewTasksViewModel by viewModels {
         ViewTasksViewModel.ViewTasksViewModelFactory(requireActivity().application)
     }
-
+    private var isGridLayout = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +37,8 @@ class InProgressTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.icFilter.setOnClickListener{showSortMenu()}
+        binding.icFilter.setOnClickListener { showSortMenu() }
+        binding.btnGridLayout.setOnClickListener { toggleLayout() }
         setupRecyclerView()
         observeTasks()
     }
@@ -91,12 +93,24 @@ class InProgressTaskFragment : Fragment() {
 
         popupWindow.showAsDropDown(binding.icFilter, 0, 0)
     }
+
     private fun onTaskClick(task: Task) {
         val action = ViewTaskFragmentDirections.actionViewTaskFragmentToDetailedTaskFragment(
             task.id,
             task.categoryId
         )
         findNavController().navigate(action)
+    }
+
+    private fun toggleLayout() {
+        isGridLayout = !isGridLayout
+        if (isGridLayout) {
+            binding.recyclerViewInProgressTask.layoutManager = GridLayoutManager(context, 2)
+            taskAdapter.setIsGridLayout(true)
+        } else {
+            binding.recyclerViewInProgressTask.layoutManager = LinearLayoutManager(context)
+            taskAdapter.setIsGridLayout(false)
+        }
     }
 
     override fun onDestroyView() {
