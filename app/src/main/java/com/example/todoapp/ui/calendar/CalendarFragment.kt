@@ -63,7 +63,15 @@ class CalendarFragment : Fragment() {
     }
     private fun loadTasksForSelectedDate(selectedDate: Date) {
         viewModel.getTasksByDueDate(selectedDate).observe(viewLifecycleOwner) { tasks ->
-            calendarTaskAdapter.submitList(tasks)
+            if(tasks.isEmpty()){
+                binding.tvNoTasks.visibility = View.VISIBLE
+                binding.rvCalendarTask.visibility = View.GONE
+            }
+            else{
+                binding.tvNoTasks.visibility = View.GONE
+                binding.rvCalendarTask.visibility = View.VISIBLE
+                calendarTaskAdapter.submitList(tasks)
+            }
         }
         viewModel.categories.observe(viewLifecycleOwner) { categories ->
             categories.forEach { category ->

@@ -43,10 +43,10 @@ class TaskAdapter(private val onClick: (Task) -> Unit) : ListAdapter<Task, TaskA
 
             binding.itemDueDate.text = dateFormat.format(task.dueDate)
 
-            val statusFormatted = formatStatus(task.status)
-            binding.itemStatus.text = statusFormatted
+//            val statusFormatted = formatStatus(task.status)
+            binding.itemStatus.text = task.status
 
-            when (statusFormatted) {
+            when (task.status) {
                 "To Do" -> {
                     binding.itemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
                 }
@@ -62,10 +62,10 @@ class TaskAdapter(private val onClick: (Task) -> Unit) : ListAdapter<Task, TaskA
         }
 
 
-        private fun formatStatus(status: String): String {
-            return status.split(" ")
-                .joinToString(" ") { it.capitalize() }
-        }
+//        private fun formatStatus(status: String): String {
+//            return status.split(" ")
+//                .joinToString(" ") { it.capitalize() }
+//        }
     }
 
 

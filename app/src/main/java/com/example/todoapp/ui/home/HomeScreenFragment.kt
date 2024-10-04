@@ -93,11 +93,20 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun setupCategoryRecyclerView() {
-        categoryAdapter = CategoryAdapter(emptyList(), emptyList()) { categoryId ->
-            val action = HomeScreenFragmentDirections
-                .actionHomeScreenFragmentToDetailedCategoryFragment(categoryId)
-            findNavController().navigate(action)
-        }
+        categoryAdapter = CategoryAdapter(emptyList(), emptyList(),
+            onCategoryClick = { categoryId ->
+                val action = HomeScreenFragmentDirections
+                    .actionHomeScreenFragmentToDetailedCategoryFragment(categoryId)
+                findNavController().navigate(action)
+            },
+            onMoreClick = { categoryId ->
+                val action =
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToCategoryWithTaskListFragment(
+                        categoryId
+                    )
+                findNavController().navigate(action)
+            }
+        )
         binding.recyclerviewTaskGroup.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = categoryAdapter

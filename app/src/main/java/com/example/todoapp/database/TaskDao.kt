@@ -72,5 +72,8 @@ interface TaskDao {
 
     @Query("SELECT COUNT(*) FROM task_table WHERE categoryId = :categoryId AND status = 'Done'")
     fun getCompletedTaskCountByCategoryId(categoryId: Long): LiveData<Int>
+
+    @Query("SELECT * FROM task_table WHERE categoryId = :categoryId AND isDeleted = 0")
+    fun getTasksForCategory(categoryId: Long): LiveData<List<Task>>
 }
 
