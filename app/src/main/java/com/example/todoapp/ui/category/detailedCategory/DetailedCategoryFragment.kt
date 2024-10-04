@@ -32,7 +32,6 @@ class DetailedCategoryFragment : BottomSheetDialogFragment() {
         DetailedCategoryViewModel.DetailedCategoryViewModelFactory(requireActivity().application)
     }
     private var selectedColor: Int = 0
-    private var selectedView: View? = null
     private var selectedCategoryId: Long? = null
     private var categories: List<Category> = emptyList()
 

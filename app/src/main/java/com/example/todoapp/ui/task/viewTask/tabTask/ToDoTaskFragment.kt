@@ -10,6 +10,7 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
 import com.example.todoapp.adapter.TaskAdapter
@@ -25,7 +26,7 @@ class ToDoTaskFragment : Fragment() {
     private val viewModel: ViewTasksViewModel by viewModels {
         ViewTasksViewModel.ViewTasksViewModelFactory(requireActivity().application)
     }
-
+    private var isGridLayout = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +38,7 @@ class ToDoTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.icFilter.setOnClickListener { showSortMenu() }
+        binding.btnGridLayout.setOnClickListener { toggleLayout() }
         setupRecyclerView()
         observeTasks()
     }
@@ -98,6 +100,16 @@ class ToDoTaskFragment : Fragment() {
         }
 
         popupWindow.showAsDropDown(binding.icFilter, 0, 0)
+    }
+    private fun toggleLayout() {
+        isGridLayout = !isGridLayout
+        if (isGridLayout) {
+            binding.recyclerViewToDoTask.layoutManager = GridLayoutManager(context, 2)
+            taskAdapter.setIsGridLayout(true)
+        } else {
+            binding.recyclerViewToDoTask.layoutManager = LinearLayoutManager(context)
+            taskAdapter.setIsGridLayout(false)
+        }
     }
 
     override fun onDestroyView() {
