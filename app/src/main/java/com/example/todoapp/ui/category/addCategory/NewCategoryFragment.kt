@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
+import com.example.todoapp.adapter.ColorAdapter
 import com.example.todoapp.databinding.FragmentNewCategoryBinding
 import com.example.todoapp.model.Category
 import com.example.todoapp.ui.category.allCategories.CategoryViewModel
@@ -25,7 +28,6 @@ class NewCategoryFragment : Fragment() {
     }
 
     private var selectedColor: Int = 0
-    private var selectedView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,27 +45,31 @@ class NewCategoryFragment : Fragment() {
     }
 
     private fun setupColorOptions() {
-        binding.apply {
-            colorOptionYellow.setOnClickListener { selectColor(binding.colorOptionYellow, R.color.bright_yellow) }
-            colorOptionRed.setOnClickListener { selectColor(binding.colorOptionRed, R.color.red) }
-            colorOptionGreen.setOnClickListener { selectColor(binding.colorOptionGreen, R.color.green) }
-            colorOptionLightGray.setOnClickListener { selectColor(binding.colorOptionLightGray, R.color.light_gray) }
-            colorOptionDarkGray.setOnClickListener { selectColor(binding.colorOptionDarkGray, R.color.dark_gray) }
-            colorOptionDarkBlue.setOnClickListener { selectColor(binding.colorOptionDarkBlue, R.color.dark_blue) }
-        }
-    }
 
-    private fun selectColor(view: View, colorRes: Int) {
-        selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_background)
-        selectedView = view
-        selectedColor = ContextCompat.getColor(requireContext(), colorRes)
-        selectedView?.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_with_check)
+        val colors = listOf(
+            R.color.bright_yellow,
+            R.color.red,
+            R.color.green,
+            R.color.light_gray,
+            R.color.dark_gray,
+            R.color.dark_blue,
+            R.color.brown,
+            R.color.dark_brown,
+            R.color.olive_green,
+        )
+
+        val adapter = ColorAdapter(requireContext(), colors) { selectedColorResId ->
+            val selectedColor = ContextCompat.getColor(requireContext(), selectedColorResId)
+            this.selectedColor = selectedColor
+        }
+
+        binding.rvColorOptions.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvColorOptions.adapter = adapter
     }
 
     private fun setupAddCategoryListener() {
         binding.btnAddCategory.setOnClickListener {
             val categoryTitle = binding.etSCategoryTitle.text.toString().trim()
-
 
             Log.d("NewCategoryFragment", "Category Title: $categoryTitle")
             Log.d("NewCategoryFragment", "Selected Color: $selectedColor")

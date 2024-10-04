@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_detailedCategoryFragment"
             app:destination="@id/detailedCategoryFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_categoryWithTaskListFragment"
+            app:destination="@id/categoryWithTaskListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
@@ -98,14 +101,17 @@
         android:id="@+id/viewAllCategoriesFragment"
         android:name="com.example.todoapp.ui.category.allCategories.ViewAllCategoriesFragment"
         android:label="fragment_view_all_categories"
-        tools:layout="@layout/fragment_view_all_categories"
-        app:argType="long">
+        app:argType="long"
+        tools:layout="@layout/fragment_view_all_categories">
         <action
             android:id="@+id/action_viewAllCategoriesFragment_to_newCategoryFragment"
             app:destination="@id/newCategoryFragment" />
         <action
             android:id="@+id/action_viewAllCategoriesFragment_to_detailedCategoryFragment"
             app:destination="@id/detailedCategoryFragment" />
+        <action
+            android:id="@+id/action_viewAllCategoriesFragment_to_categoryWithTaskListFragment"
+            app:destination="@id/categoryWithTaskListFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailedCategoryFragment"
@@ -118,5 +124,17 @@
         <action
             android:id="@+id/action_detailedCategoryFragment_to_newCategoryFragment"
             app:destination="@id/newCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryWithTaskListFragment"
+        android:name="com.example.todoapp.ui.category.detailedCategory.CategoryWithTaskListFragment"
+        android:label="fragment_category_with_task_list"
+        tools:layout="@layout/fragment_category_with_task_list">
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_categoryWithTaskListFragment_to_detailedTaskFragment"
+            app:destination="@id/detailedTaskFragment" />
     </fragment>
 </navigation>

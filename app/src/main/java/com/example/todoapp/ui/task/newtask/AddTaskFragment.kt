@@ -170,21 +170,24 @@ class AddTaskFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
-        val calendar: Calendar = Calendar.getInstance()
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH)
+        val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog =
-            DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = Calendar.getInstance().apply {
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val dueDate = Calendar.getInstance().apply {
                     set(selectedYear, selectedMonth, selectedDay)
-                }
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                binding.tvSelectedDueDate.text = dateFormat.format(selectedDate.time)
-            }, year, month, day)
+                }.time
+                binding.tvSelectedDueDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dueDate)
+            },
+            year,
+            month,
+            day
+        )
 
-        datePickerDialog.setTitle("Select Date")
         datePickerDialog.show()
     }
 

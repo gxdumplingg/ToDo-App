@@ -53,5 +53,8 @@ class TaskRepository(context: Context) {
     fun getAllActiveTasks(): LiveData<List<Task>> {
         return taskDao.getAllActiveTasks()
     }
+    fun getTasksForCategory(categoryId: Long): LiveData<List<Task>> {
+        return taskDao.getTasksForCategory(categoryId)
+    }
 
 }
