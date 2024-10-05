@@ -84,5 +84,6 @@ dependencies {
         androidTestImplementation(libs.androidx.espresso.core)
 
         implementation ("com.applandeo:material-calendar-view:1.9.2")
+        implementation ("com.google.android.material:material:1.13.0-alpha05")
     }
 }
