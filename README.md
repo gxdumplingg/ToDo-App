@@ -49,7 +49,7 @@
   </tr>
 </table>
 
-- **View Task List grouped by Category** and **view Detailed Category** by selecting the More button and tapping on the category respectively:
+- **View Task List grouped by Category** and **View Detailed Category** by selecting the More button and tapping on the category respectively:
 <table>
   <tr>
     <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_category_task_list.png" style="width:300px; height:680px;"></td>
@@ -65,7 +65,7 @@
   </tr>
 </table>
 
-### c. Note Screen
+### c. Task Screen
 - Allow to view all tasks, sort tasks by due dates, or view tasks grouped by status. Tasks are divided by 3 statuses, including: **To Do**, **In Progress** and **Done**.
 <table>
   <tr>
