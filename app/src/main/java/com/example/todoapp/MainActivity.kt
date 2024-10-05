@@ -27,6 +27,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.addTaskFragment -> {
                     bottomNavigationView.visibility = View.GONE
                 }
+                R.id.newCategoryFragment -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
                 R.id.detailedTaskFragment -> {
                     bottomNavigationView.visibility = View.GONE
                 }
