@@ -8,7 +8,7 @@
     <string name="my_name">Le Huong Giang</string>
     <string name="in_progress">In Progress</string>
     <string name="search_task">Search task</string>
-    <string name="your_today_task_almost_done">Your today\'s task \nalmost done</string>
+    <string name="your_tasks_almost_done">Your tasks\'re \nalmost done!</string>
     <string name="view_task">View Task</string>
     <string name="add_task">Add Task</string>
     <string name="category">Category</string>

@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.newCategoryFragment -> {
                     bottomNavigationView.visibility = View.GONE
                 }
+                R.id.categoryWithTaskListFragment -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+
                 R.id.detailedTaskFragment -> {
                     bottomNavigationView.visibility = View.GONE
                 }
