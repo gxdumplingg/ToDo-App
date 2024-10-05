@@ -45,7 +45,7 @@
 - **Adding New Category** by selecting the Add button:
 <table>
   <tr>
-    <td> <img src="" style="width:300px; height:680px;"></td>
+    <td> <img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/add_new_category.png" style="width:300px; height:680px;"></td>
   </tr>
 </table>
 
@@ -53,7 +53,7 @@
 <table>
   <tr>
     <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_category_task_list.png" style="width:300px; height:680px;"></td>
-    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/detailed_category.png" style="width:300px; height:680px;"></td>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_detailed_category.png" style="width:300px; height:680px;"></td>
   </tr>
 </table>
 
@@ -66,16 +66,39 @@
 </table>
 
 ### c. Note Screen
-- Allow to view all tasks, sort tasks by due dates, or view tasks grouped by status. Tasks are divided by 3 statuses, including: To Do, In Progress and Done.
-- Allow to view both linear layout and grid layout.
-
+- Allow to view all tasks, sort tasks by due dates, or view tasks grouped by status. Tasks are divided by 3 statuses, including: **To Do**, **In Progress** and **Done**.
+<table>
+  <tr>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_all_tasks.png" ></td>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_to_do_tasks.png" ></td>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_in_progress_tasks.png" ></td>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_done_tasks.png" ></td>
+  </tr>
+</table>
+- Tasks can also be displayed in grid layout.
+<table>
+  <tr>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_grid_layout.png" style="width:300px; height:680px;"></td>
+  </tr>
+</table>
 
 - When tapping on a task, detailed information of a task will be displayed on screen. Additionally, editting and deleting task are also allowed.
+<table>
+  <tr>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_detailed_task.png" style="width:300px; height:680px;"></td>
+  </tr>
+</table>
 
 
 ### d. Recently Deleted Screen
-- All recently deleted tasks will be displayed here and can be restored.
-
+- All deleted tasks will be moved into Recently Deleted Screen and can be restored.
+<table>
+  <tr>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/recently_deleted_no_task.png" ></td>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/view_recently_deleted.png" ></td>
+    <td><img src="https://github.com/gxdumplingg/ReadMe.Image/blob/main/restore_task.png" ></td>
+  </tr>
+</table>
 
 
 
